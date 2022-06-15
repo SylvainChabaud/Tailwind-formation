@@ -1,10 +1,27 @@
-import { describe, it } from 'mocha';
-import assert from 'assert';
+var assert = require('assert');
+var describe = require('mocha').describe;
+var it = require('mocha').it;
 
-describe('Array', function () {
-  describe('#indexOf()', function () {
-    it('should return -1 when the value is not present', function () {
-      assert.equal([1, 2, 3].indexOf(4), -1);
+var itemMockCtrl = require('../server/controllers/ItemMockCtrl/itemMockCtrl');
+
+const newItemJohn = {
+  _id: 146,
+  name: 'John',
+  category: {
+    label: 'CAT1',
+    value: 'A'
+  },
+  group: 'confirmed',
+  createdAt: new Date(),
+  updatedAt: new Date()
+};
+
+var itemsList = [];
+
+describe('itemMockCtrl', function () {
+  describe('#createItem()', function () {
+    it('should return a list with the added item', function () {
+      assert.deepEqual(itemMockCtrl.createItem(itemsList, newItemJohn), [newItemJohn]);
     });
   });
 });
