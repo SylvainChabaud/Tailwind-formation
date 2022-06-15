@@ -10,7 +10,7 @@ var cors = require('cors');
 var app = express();
 const urlParse = require('url-parse');
 
-var itemMockCtrl = require('./controllers/itemMockCtrl/itemMockCtrl');
+var mockCtrl = require('./controllers/itemMockCtrl/itemMockCtrl');
 
 var externalHosts;
 
@@ -68,52 +68,35 @@ const setRoutes = () => {
 };
 
 const newItemJohn = {
-  _id: 146,
   name: 'John',
   category: {
     label: 'CAT1',
     value: 'A'
   },
-  group: 'confirmed',
-  createdAt: new Date(),
-  updatedAt: new Date()
-};
-const newItemMarc = {
-  _id: 147,
-  name: 'Marc',
-  category: {
-    label: 'CAT2',
-    value: 'C'
-  },
-  group: 'amator',
-  createdAt: new Date(),
-  updatedAt: new Date()
+  group: 'user'
 };
 const newItemSofia = {
-  _id: 148,
   name: 'Sophia',
   category: {
-    label: 'CAT3',
+    label: 'CAT2',
     value: 'B'
   },
-  group: 'master',
-  createdAt: new Date(),
-  updatedAt: new Date()
+  group: 'user'
+};
+const newItemPaul = {
+  name: 'Paul',
+  category: {
+    label: 'CAT3',
+    value: 'C'
+  },
+  group: 'admin'
 };
 
-var itemsList = [];
-itemsList = itemMockCtrl.createItem(itemsList, newItemJohn); // Add John
-itemsList = itemMockCtrl.createItem(itemsList, newItemMarc); // Add Marc
-console.info('CREATE', itemsList);
-
-var itemFounded = itemMockCtrl.getItemById(itemsList, 147); // Get Marc
-console.info('READ', itemFounded);
-
-itemsList = itemMockCtrl.updateItem(itemsList, itemFounded._id, newItemSofia); // Update itemFounded (Marc) with Sofia
-console.info('UPDATE', itemsList);
-
-itemsList = itemMockCtrl.deleteItem(itemsList, 146); // Delete John
-console.info('DELETE', itemsList);
+console.info('CREATE', mockCtrl.createItem(newItemJohn)); // Add John
+console.info('CREATE', mockCtrl.createItem(newItemSofia)); // Add Sophia
+console.info('READ', mockCtrl.getItemById(1)); // Get John
+console.info('UPDATE', mockCtrl.updateItem(2, newItemPaul)); // Update item Sophia with Paul
+console.info('DELETE', mockCtrl.deleteItem(1)); // Delete John
 
 module.exports = {
   app,
