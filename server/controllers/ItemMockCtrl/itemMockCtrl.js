@@ -1,49 +1,40 @@
 var R = require('ramda');
 
+var itemsList = [];
+
 const ItemMockCtrl = (() => {
-  const createItem = (items, item) => {
-    const result = R.concat(items, [item]);
-    return result;
+  const createItem = item => {
+    item = R.compose(
+      R.assoc('_id', itemsList.length + 1),
+      R.assoc('createdAt', new Date()),
+      R.assoc('updatedAt', new Date())
+    )(item);
+    itemsList = R.concat(itemsList, [item]);
+    return itemsList.length;
   };
 
-  const getItemById = (items, id) => {
-    var result = `item ${id} non trouvé !`;
-    for (var ind = 0; ind < items.length; ++ind) {
-      if (R.equals(id, items[ind]._id)) {
-        result = items[ind];
-        break;
-      }
-    }
-    return result;
+  const getItemById = id => {
+    return R.find(R.propEq('_id', id), itemsList);
   };
 
-  const updateItem = (items, id, item) => {
-    var result = `item ${id} non trouvé !`;
-    for (var ind = 0; ind < items.length; ++ind) {
-      if (R.equals(id, items[ind]._id)) {
-        result = R.insert(ind, item, R.remove(ind, 1, items));
-        break;
-      }
-    }
-    return result;
+  const updateItem = (id, itemToUpdate) => {
+    itemsList.forEach((item, index) => (item._id === id) && (itemsList[index] = R.assoc('updatedAt', new Date(), itemToUpdate)));
+    return itemsList;
   };
 
-  const deleteItem = (items, id) => {
-    var result = `item ${id} non trouvé !`;
-    for (var ind = 0; ind < items.length; ++ind) {
-      if (R.equals(id, items[ind]._id)) {
-        result = R.remove(ind, ind + 1, items);
-        break;
-      }
-    }
-    return result;
+  const deleteItem = id => {
+    var listClone = R.clone(itemsList);
+    var newItems = itemsList.filter(item => item._id !== id);
+    itemsList = newItems;
+    return listClone.length !== newItems;
   };
 
   return {
     createItem,
     getItemById,
     updateItem,
-    deleteItem
+    deleteItem,
+    itemsList
   };
 })();
 
