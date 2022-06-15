@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "nodemonConfig": {
     "ignore": [
       "app/*",
@@ -14,6 +15,7 @@
     "front:build": "NODE_ENV=production webpack --config ./webpack.prod.js --progress",
     "server:dev": "nodemon server/bin/www.js",
     "server:prod": "node server/bin/www.js",
+    "server:test": "mocha spec/**/*.js --recursive --timeout 60000 --exit",
     "getSchema": "graphql-inspector introspect http://localhost:7052/graphql -w ./schema.graphql",
     "relay": "relay-compiler"
   },
