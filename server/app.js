@@ -9,9 +9,7 @@ var indexRouter = require('./routes/index');
 var cors = require('cors');
 var app = express();
 const urlParse = require('url-parse');
-
-var mockCtrl = require('./controllers/itemMockCtrl/itemMockCtrl');
-
+const mockCtrl = require('./controllers/itemMockCtrl/itemMockCtrl');
 var externalHosts;
 
 (async () => {

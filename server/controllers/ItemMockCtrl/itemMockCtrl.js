@@ -1,6 +1,5 @@
 var R = require('ramda');
-
-var itemsList = [];
+var itemsList = require('./itemsList');
 
 const ItemMockCtrl = (() => {
   const createItem = item => {
@@ -10,7 +9,7 @@ const ItemMockCtrl = (() => {
       R.assoc('updatedAt', new Date())
     )(item);
     itemsList = R.concat(itemsList, [item]);
-    return itemsList.length;
+    return item;
   };
 
   const getItemById = id => {
@@ -18,15 +17,23 @@ const ItemMockCtrl = (() => {
   };
 
   const updateItem = (id, itemToUpdate) => {
-    itemsList.forEach((item, index) => (item._id === id) && (itemsList[index] = R.assoc('updatedAt', new Date(), itemToUpdate)));
-    return itemsList;
+    itemsList = R.map(item => {
+      if (item._id === id) {
+        const itemToAdd = R.compose(
+          R.assoc('_id', item._id),
+          R.assoc('createdAt', item.createdAt),
+          R.assoc('updatedAt', new Date())
+        )(itemToUpdate);
+        return itemToAdd;
+      } else return item;
+    }, itemsList);
+    return itemToUpdate;
   };
 
   const deleteItem = id => {
-    var listClone = R.clone(itemsList);
-    var newItems = itemsList.filter(item => item._id !== id);
-    itemsList = newItems;
-    return listClone.length !== newItems;
+    const listLength = itemsList.length;
+    itemsList = R.filter(item => item._id !== id, itemsList);
+    return listLength !== itemsList.lenth;
   };
 
   return {
