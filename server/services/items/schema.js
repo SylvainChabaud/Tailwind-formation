@@ -1,15 +1,13 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const itemSchema = mongoose.Schema({
-  _id: { type: Number },
+const itemSchema = new Schema({
   name: { type: String, index: { unique: true } },
   category: {
     label: { type: String },
     value: { type: String }
   },
-  group: { type: String },
-  createdAt: { type: Date },
-  updatedAt: { type: Date }
+  group: { type: String }
 }, {
   toObject: {
     virtuals: true,
@@ -21,4 +19,4 @@ const itemSchema = mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Item', itemSchema);
+module.exports = itemSchema;
