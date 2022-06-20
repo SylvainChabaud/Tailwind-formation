@@ -22,6 +22,11 @@ enum BeneficiaryEnum {
   U
 }
 
+type Category {
+  label: String
+  value: String
+}
+
 enum CivilityEnum {
   M
   MME
@@ -127,6 +132,12 @@ enum GenderEnum {
   M
 }
 
+type Item {
+  category: Category
+  group: String
+  name: String
+}
+
 type Mutation {
   CreateSignature(input: CreateSignatureInput!): CreateSignatureMutationResponse
   SubscriberBankInformation(input: SubscriberBankInformationInput!): SubscriberBankInformationMutationResponse
@@ -159,6 +170,7 @@ type Payments {
 type Query {
   contract(subscriberId: ID!): Contract
   getBeneficiaries(subscriberId: ID!): Beneficiaries
+  getItemById(itemId: ID!): Item
 }
 
 type ResumeStatus {
