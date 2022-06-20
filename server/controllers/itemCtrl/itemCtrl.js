@@ -1,6 +1,6 @@
 const ItemModel = require('../../services/items/items');
 
-const getByIdCtrl = async itemId => {
+const getByIdCtrl = itemId => {
   return ItemModel.getItemById(itemId);
 };
 
