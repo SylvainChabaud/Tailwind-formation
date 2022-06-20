@@ -1,12 +1,17 @@
 const {
   getByIdCtrl
 } = require('../../controllers/itemCtrl');
+const { OK, KO } = require('./helpers');
 
 const ItemsResolver = () => (() => {
   const getItemById = async (itemId) => {
-    const { data } = await getByIdCtrl(itemId);
-    console.log(JSON.stringify(data, null, 1));
-    if (data) return data;
+    try {
+      const item = await getByIdCtrl(itemId);
+      return OK({ item });
+    } catch (err) {
+      console.info('ERROR', err);
+      return KO('Une erreur est survenue');
+    }
   };
 
   return {

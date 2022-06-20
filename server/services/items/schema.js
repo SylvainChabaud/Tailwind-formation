@@ -3,12 +3,10 @@ const Schema = mongoose.Schema;
 
 const itemSchema = new Schema({
   name: { type: String, index: { unique: true } },
-  category: {
-    label: { type: String },
-    value: { type: String }
-  },
+  category: { type: String, enum: ['A', 'B', 'C', 'D'] },
   group: { type: String }
 }, {
+  timestamps: true,
   toObject: {
     virtuals: true,
     getters: true

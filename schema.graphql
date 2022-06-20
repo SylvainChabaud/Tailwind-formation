@@ -22,11 +22,6 @@ enum BeneficiaryEnum {
   U
 }
 
-type Category {
-  label: String
-  value: String
-}
-
 enum CivilityEnum {
   M
   MME
@@ -133,7 +128,7 @@ enum GenderEnum {
 }
 
 type Item {
-  category: Category
+  category: String
   group: String
   name: String
 }

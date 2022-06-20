@@ -10,9 +10,9 @@ const getCollectionHandler = (collection = 'items') => {
 const ItemModel = (() => {
   const createItem = () => {};
 
-  const getItemById = async id => {
+  const getItemById = async itemId => {
     const handler = await getCollectionHandler();
-    return handler.findOne({ _id: id });
+    return handler.findOne({ _id: itemId });
   };
 
   const updateItem = () => {};
