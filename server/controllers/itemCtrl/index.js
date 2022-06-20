@@ -1,7 +1,5 @@
-const getByIdCtrl = require('./itemCtrl');
+const ItemCtrl = require('./itemCtrl');
 
-const itemsCtrl = {
-  getByIdCtrl
+export {
+  ItemCtrl
 };
-
-module.exports = itemsCtrl;

@@ -1,12 +1,10 @@
-const {
-  getByIdCtrl
-} = require('../../controllers/itemCtrl');
-const { OK, KO } = require('./helpers');
+import { ItemCtrl } from '../../controllers/itemCtrl';
+import { OK, KO } from './helpers';
 
-const ItemsResolver = () => (() => {
-  const getItemById = async (itemId) => {
+const ItemsResolver = (context) => (() => {
+  const getItemById = async itemId => {
     try {
-      const item = await getByIdCtrl(itemId);
+      const item = await ItemCtrl(context).getItemById(itemId);
       return OK({ item });
     } catch (err) {
       console.info('ERROR', err);

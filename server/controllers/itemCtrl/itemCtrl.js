@@ -1,7 +1,13 @@
-const ItemModel = require('../../services/items/items');
+import ItemModel from '../../services/items/items';
 
-const getByIdCtrl = itemId => {
-  return ItemModel.getItemById(itemId);
+const itemCtrl = (context) => {
+  const getItemById = (itemId) => {
+    return ItemModel.getItemById(itemId);
+  };
+
+  return {
+    getItemById
+  };
 };
 
-module.exports = getByIdCtrl;
+module.exports = itemCtrl;
