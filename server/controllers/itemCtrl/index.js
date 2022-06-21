@@ -1,5 +1,7 @@
 const ItemCtrl = require('./itemCtrl');
 
-export {
+const itemsCtrl = {
   ItemCtrl
 };
+
+module.exports = itemsCtrl;

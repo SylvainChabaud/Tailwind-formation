@@ -1,5 +1,5 @@
-import { ItemCtrl } from '../../controllers/itemCtrl';
-import { OK, KO } from './helpers';
+const { ItemCtrl } = require('../../controllers/itemCtrl');
+const { OK, KO } = require('./helpers');
 
 const ItemsResolver = (context) => (() => {
   const getItemById = async itemId => {

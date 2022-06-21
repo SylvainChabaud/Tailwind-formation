@@ -1,4 +1,4 @@
-import ItemModel from '../../services/items/items';
+const ItemModel = require('../../services/items/items');
 
 const itemCtrl = (context) => {
   const getItemById = (itemId) => {

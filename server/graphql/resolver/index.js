@@ -1,7 +1,9 @@
 const ContractResolver = require('./ContractResolver');
 const ItemsResolver = require('./ItemsResolver');
 
-export {
+const Resolver = {
   ContractResolver,
   ItemsResolver
 };
+
+module.exports = Resolver;

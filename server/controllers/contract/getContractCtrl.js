@@ -1,8 +1,4 @@
-import { logger } from '@fasstech/logger';
-import { KO, OK } from '../../graphql/resolver/helpers';
-
 const getContractCtrl = async (contractId) => {
-
   return {
     ok: true,
     error: null,
