@@ -127,6 +127,20 @@ enum GenderEnum {
   M
 }
 
+type Item {
+  category: String
+  createdAt: String
+  group: String
+  name: String
+  updatedAt: String
+}
+
+type ItemResponse {
+  error: String
+  item: Item
+  ok: Boolean
+}
+
 type Mutation {
   CreateSignature(input: CreateSignatureInput!): CreateSignatureMutationResponse
   SubscriberBankInformation(input: SubscriberBankInformationInput!): SubscriberBankInformationMutationResponse
@@ -159,6 +173,7 @@ type Payments {
 type Query {
   contract(subscriberId: ID!): Contract
   getBeneficiaries(subscriberId: ID!): Beneficiaries
+  getItemById(itemId: ID!): ItemResponse
 }
 
 type ResumeStatus {
