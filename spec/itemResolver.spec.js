@@ -45,7 +45,7 @@ describe.only('itemResolver', function () {
   });
 
   describe('#getItemById()', function () {
-    it('should return FIRST ITEM when his ID is found', async () => {
+    it('should return ITEM when his ID is found', async () => {
       const response = await ItemsResolver().getItemById('62b1d766d17eae3c700030dd');
       expect(response.ok).to.equal(true);
       expect(response.item.id).to.equal('62b1d766d17eae3c700030dd');
@@ -56,21 +56,10 @@ describe.only('itemResolver', function () {
       expect((response.item.updatedAt).getTime()).to.equal(currentDate.getTime());
     });
 
-    it('should return SECOND ITEM when his ID is found', async () => {
-      const response = await ItemsResolver().getItemById('62b1d766d17eae3c700030de');
-      expect(response.ok).to.equal(true);
-      expect(response.item.id).to.equal('62b1d766d17eae3c700030de');
-      expect(response.item.name).to.equal('Mary');
-      expect(response.item.group).to.equal('User');
-      expect(response.item.category).to.equal('B');
-      expect((response.item.createdAt).getTime()).to.equal(currentDate.getTime());
-      expect((response.item.updatedAt).getTime()).to.equal(currentDate.getTime());
-    });
-
     it('should return an ERROR when ID is NOT found', async () => {
-      const response = await ItemsResolver().getItemById('x');
-      expect(response.ok).to.equal(false);
-      expect(response.error).to.equal('Une erreur est survenue');
+      const response = await ItemsResolver().getItemById('62b1d766d17eae3c700030df');
+      expect(response.ok).to.equal(true);
+      expect(response.item).to.equal(null);
     });
 
     it('should return NULL ITEM when no ID input argument', async () => {
