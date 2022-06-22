@@ -1,10 +1,9 @@
-/* eslint-disable camelcase */
-import passport from 'passport';
-import { BasicStrategy } from 'passport-http';
-import { Strategy as BearerStrategy } from 'passport-http-bearer';
-import ApiKeys from '../models/ApiKeys';
-import jwt from 'jsonwebtoken';
-import { compose, not, path, propEq } from 'ramda';
+var passport = require('passport');
+var { BasicStrategy } = require('passport-http');
+var { Strategy } = require('passport-http-bearer');
+var ApiKeys = require('../models/ApiKeys');
+var jwt = require('jsonwebtoken');
+var { path, propEq } = require('ramda');
 
 const R = require('ramda');
 
@@ -22,17 +21,17 @@ const authentication = (() => {
 
     oauth2server.exchange(oauth2orize.exchange.clientCredentials({ userProperty: 'account' }, function (client, done) {
       client = R.omit(['secretKey'], client);
-      const token_access = jwt.sign({ client }, process.env.JWT_SECRET, { expiresIn });
-      const token_refresh = jwt.sign({ client }, process.env.JWT_SECRET);
-      done(null, token_access, token_refresh, { expires_in: expiresIn });
+      const tokenAccess = jwt.sign({ client }, process.env.JWT_SECRET, { expiresIn });
+      const tokenRefresh = jwt.sign({ client }, process.env.JWT_SECRET);
+      done(null, tokenAccess, tokenRefresh, { expires_in: expiresIn });
     }));
 
     oauth2server.exchange(oauth2orize.exchange.refreshToken(function (client, refreshToken, done) {
       try {
         jwt.verify(refreshToken, process.env.JWT_SECRET);
-        const token_access = jwt.sign({}, process.env.JWT_SECRET, { expiresIn });
-        const token_refresh = jwt.sign({}, process.env.JWT_SECRET);
-        done(null, token_access, token_refresh, { expires_in: expiresIn });
+        const tokenAccess = jwt.sign({}, process.env.JWT_SECRET, { expiresIn });
+        const tokenRefresh = jwt.sign({}, process.env.JWT_SECRET);
+        done(null, tokenAccess, tokenRefresh, { expires_in: expiresIn });
       } catch (err) {
         return done(null, false);
       }
@@ -55,7 +54,7 @@ const authentication = (() => {
       ));
 
     passport.use(
-      new BearerStrategy(
+      new Strategy(
         {},
         (accessToken, done) => {
           process.nextTick(() => {

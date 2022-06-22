@@ -1,4 +1,4 @@
-import { logger } from '@fasstech/logger';
+const { logger } = require('@fasstech/logger');
 const R = require('ramda');
 const assert = require('assert');
 const YAML = require('yaml');
