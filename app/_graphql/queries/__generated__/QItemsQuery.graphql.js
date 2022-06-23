@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 580ffb3f053bfb1b43594ea92cca1bc6
+ * @relayHash 204145bfa1235117ed15ea5a8765f833
  */
 
 /* eslint-disable */
@@ -9,9 +9,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type QItemsQueryVariables = {|
-  itemId: string
-|};
+export type QItemsQueryVariables = {||};
 export type QItemsQueryResponse = {|
   +getItems: ?{|
     +ok: ?boolean,
@@ -33,10 +31,8 @@ export type QItemsQuery = {|
 
 
 /*
-query QItemsQuery(
-  $itemId: ID!
-) {
-  getItems(itemId: $itemId) {
+query QItemsQuery {
+  getItems {
     ok
     error
     items {
@@ -53,21 +49,8 @@ query QItemsQuery(
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "itemId"
-  }
-],
-v1 = [
-  {
     "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "itemId",
-        "variableName": "itemId"
-      }
-    ],
+    "args": null,
     "concreteType": "ItemsResponse",
     "kind": "LinkedField",
     "name": "getItems",
@@ -139,23 +122,23 @@ v1 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "QItemsQuery",
-    "selections": (v1/*: any*/),
+    "selections": (v0/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "QItemsQuery",
-    "selections": (v1/*: any*/)
+    "selections": (v0/*: any*/)
   },
   "params": {
-    "id": "580ffb3f053bfb1b43594ea92cca1bc6",
+    "id": "204145bfa1235117ed15ea5a8765f833",
     "metadata": {},
     "name": "QItemsQuery",
     "operationKind": "query",
@@ -164,6 +147,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '19371687a0c63b93def8d3bbd82277a4';
+(node/*: any*/).hash = '13d1f981d6b2345e17c1e2da746268c9';
 
 module.exports = node;

@@ -180,7 +180,7 @@ type Query {
   contract(subscriberId: ID!): Contract
   getBeneficiaries(subscriberId: ID!): Beneficiaries
   getItemById(itemId: ID!): ItemResponse
-  getItems(itemId: ID!): ItemsResponse
+  getItems: ItemsResponse
 }
 
 type ResumeStatus {

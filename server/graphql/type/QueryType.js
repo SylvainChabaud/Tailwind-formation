@@ -7,7 +7,7 @@ module.exports = {
       contract(subscriberId: ID!): Contract
       getBeneficiaries(subscriberId: ID!): Beneficiaries
       getItemById(itemId: ID!): ItemResponse
-      getItems(itemId: ID!): ItemsResponse
+      getItems: ItemsResponse
     }
   `,
   resolvers: {
@@ -15,7 +15,7 @@ module.exports = {
       contract: (parent, { subscriberId: contractId }, context) => ContractResolver(context).get(contractId),
       getBeneficiaries: (parent, { subscriberId }, context) => Promise.resolve(),
       getItemById: (parent, { itemId }, context) => ItemsResolver(context).getItemById(itemId),
-      getItems: (parent, { itemId }, context) => ItemsResolver(context).getItems()
+      getItems: (parent, arg, context) => ItemsResolver(context).getItems()
     }
   }
 };

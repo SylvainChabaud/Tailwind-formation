@@ -7,14 +7,12 @@ const ListeItems = () => {
   const environment = useRelayEnvironment();
   const [items, setItems] = useState(null);
 
-  const itemId = '62b07902164736a0acd82487';
-
   useEffect(() => {
     let hasBeenCancelled = false;
     const fetchData = async () => {
       console.log('getItems');
       try {
-        const { getItems: result } = await fetchQuery(environment, query, { itemId }).toPromise();
+        const { getItems: result } = await fetchQuery(environment, query, {}).toPromise();
         if (result.ok && !hasBeenCancelled) {
           setItems(result.items);
         }
