@@ -12,8 +12,19 @@ const ItemsResolver = (context) => (() => {
     }
   };
 
+  const getItems = async itemId => {
+    try {
+      const items = await ItemCtrl(context).getItems();
+      return OK({ items });
+    } catch (err) {
+      console.info('ERROR', err);
+      return KO('Une erreur est survenue');
+    }
+  };
+
   return {
-    getItemById
+    getItemById,
+    getItems
   };
 })();
 
