@@ -10,7 +10,6 @@ const ListeItems = () => {
   useEffect(() => {
     let hasBeenCancelled = false;
     const fetchData = async () => {
-      console.log('getItems');
       try {
         const { getItems: result } = await fetchQuery(environment, query, {}).toPromise();
         if (result.ok && !hasBeenCancelled) {
@@ -43,24 +42,18 @@ const ListeItems = () => {
     });
   };
 
-  const TheadComponent = () => {
-    return (
-      <tr>
-        <ThComponent label='Nom'/>
-        <ThComponent label='Catégorie'/>
-        <ThComponent label="Groupe"/>
-        <ThComponent label='Date de création'/>
-        <ThComponent label='Date de mise à jour'/>
-      </tr>
-    );
-  };
-
   return (
     <>
       { items &&
         <table className='min-w-full'>
           <thead className='bg-white border-b'>
-            <TheadComponent />
+            <tr>
+              <ThComponent label='Nom'/>
+              <ThComponent label='Catégorie'/>
+              <ThComponent label="Groupe"/>
+              <ThComponent label='Date de création'/>
+              <ThComponent label='Date de mise à jour'/>
+            </tr>
           </thead>
           <tbody>
             <TbodyComponent />

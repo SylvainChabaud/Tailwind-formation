@@ -12,7 +12,7 @@ const ItemsResolver = (context) => (() => {
     }
   };
 
-  const getItems = async itemId => {
+  const getItems = async (context) => {
     try {
       const items = await ItemCtrl(context).getItems();
       return OK({ items });
