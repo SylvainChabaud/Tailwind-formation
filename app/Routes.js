@@ -3,6 +3,7 @@ import GQLEnvironment from './_graphql/Environment';
 import Preface from '@@pages/preface';
 import { MeasureContext } from '@@hooks/useMeasure';
 import Measure from 'react-measure';
+import ListeItems from './pages/ListeItems';
 
 import {
   BrowserRouter as Router,
@@ -28,6 +29,7 @@ const RoutesComponent = () => {
               <Router>
                 <Routes>
                   <Route exact path="/" element={<Preface/>} />
+                  <Route exact path="/items" element={<ListeItems/>} />
                   <Route exact path="/sante-tns" element={<SanteTns/>} />
                 </Routes>
               </Router>

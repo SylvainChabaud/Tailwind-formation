@@ -51,11 +51,12 @@ app.use(cors({
   allowedHeaders: ['Origin', 'Authorization', 'Access-Control-Allow-Headers', 'X-Requested-With', 'Content-Type', 'Accept'],
   credentials: true,
   origin: (origin, callback) => {
-    if (R.isNil(origin)) return callback(null, true);
-    const { host } = urlParse(origin);
-    console.log(host, JSON.stringify(externalHosts));
-    if (R.includes(host, externalHosts)) return callback(null, true);
-    callback(new Error('unauthorized host'));
+    return callback(null, true);
+    // if (R.isNil(origin)) return callback(null, true);
+    // const { host } = urlParse(origin);
+    // console.log('HOST', host, JSON.stringify(externalHosts));
+    // if (R.includes(host, externalHosts)) return callback(null, true);
+    // callback(new Error('unauthorized host'));
   }
 }));
 
