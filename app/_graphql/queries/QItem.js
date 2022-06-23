@@ -1,7 +1,7 @@
 import { graphql } from 'react-relay';
 
-const QItemsQuery = graphql`
-  query QItemsQuery($itemId: ID!) {
+const QItemQuery = graphql`
+  query QItemQuery($itemId: ID!) {
     getItemById(itemId: $itemId) {
       ok
       error
@@ -16,4 +16,4 @@ const QItemsQuery = graphql`
   }
 `;
 
-export { QItemsQuery };
+export { QItemQuery };

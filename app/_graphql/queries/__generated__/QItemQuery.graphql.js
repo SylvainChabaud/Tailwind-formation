@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2538508f52515c58886e0a5d80280d95
+ * @relayHash c08ac2740e2aff39ce898e56e3c6a97e
  */
 
 /* eslint-disable */
@@ -9,10 +9,10 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type QItemsQueryVariables = {|
+export type QItemQueryVariables = {|
   itemId: string
 |};
-export type QItemsQueryResponse = {|
+export type QItemQueryResponse = {|
   +getItemById: ?{|
     +ok: ?boolean,
     +error: ?string,
@@ -25,15 +25,15 @@ export type QItemsQueryResponse = {|
     |},
   |}
 |};
-export type QItemsQuery = {|
-  variables: QItemsQueryVariables,
-  response: QItemsQueryResponse,
+export type QItemQuery = {|
+  variables: QItemQueryVariables,
+  response: QItemQueryResponse,
 |};
 */
 
 
 /*
-query QItemsQuery(
+query QItemQuery(
   $itemId: ID!
 ) {
   getItemById(itemId: $itemId) {
@@ -142,7 +142,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "QItemsQuery",
+    "name": "QItemQuery",
     "selections": (v1/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -151,19 +151,19 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "QItemsQuery",
+    "name": "QItemQuery",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "id": "2538508f52515c58886e0a5d80280d95",
+    "id": "c08ac2740e2aff39ce898e56e3c6a97e",
     "metadata": {},
-    "name": "QItemsQuery",
+    "name": "QItemQuery",
     "operationKind": "query",
     "text": null
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'deed51cc2980f015fb5afdec45708ba7';
+(node/*: any*/).hash = '83aecee2d1d57e78c74239dd76ea3eb2';
 
 module.exports = node;
