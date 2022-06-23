@@ -68,4 +68,24 @@ describe.only('itemResolver', function () {
       expect(response.item).to.equal(null);
     });
   });
+
+  describe('#getItems()', function () {
+    it('should return ALL ITEMS', async () => {
+      const response = await ItemsResolver().getItems();
+      expect(response.ok).to.equal(true);
+      expect(response.items[0].id).to.equal('62b1d766d17eae3c700030dd');
+      expect(response.items[0].name).to.equal('John');
+      expect(response.items[0].group).to.equal('Admin');
+      expect(response.items[0].category).to.equal('A');
+      expect((response.items[0].createdAt).getTime()).to.equal(currentDate.getTime());
+      expect((response.items[0].updatedAt).getTime()).to.equal(currentDate.getTime());
+
+      expect(response.items[1].id).to.equal('62b1d766d17eae3c700030de');
+      expect(response.items[1].name).to.equal('Mary');
+      expect(response.items[1].group).to.equal('User');
+      expect(response.items[1].category).to.equal('B');
+      expect((response.items[1].createdAt).getTime()).to.equal(currentDate.getTime());
+      expect((response.items[1].updatedAt).getTime()).to.equal(currentDate.getTime());
+    });
+  });
 });
