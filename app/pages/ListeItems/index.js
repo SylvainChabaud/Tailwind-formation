@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { QItemQuery as query } from '../../_graphql/queries/QItem';
+import { QItemsQuery as query } from '../../_graphql/queries/QItems';
 
 import { fetchQuery, useRelayEnvironment } from 'react-relay';
 
@@ -12,14 +12,14 @@ const ListeItems = () => {
   useEffect(() => {
     let hasBeenCancelled = false;
     const fetchData = async () => {
-      console.log('getItemById using item id ', { itemId });
+      console.log('getItems');
       try {
-        const { getItemById: result } = await fetchQuery(environment, query, { itemId }).toPromise();
+        const { getItems: result } = await fetchQuery(environment, query, { itemId }).toPromise();
         if (result.ok && !hasBeenCancelled) {
-          setItems(result.item);
+          setItems(result.items);
         }
       } catch (e) {
-        console.error('GET ITEM ERROR : ', e);
+        console.error('GET ITEMS ERROR : ', e);
         return null;
       }
     };
@@ -31,27 +31,41 @@ const ListeItems = () => {
   const ThComponent = ({ label }) => <th scope='col' className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>{label}</th>;
   const TdComponent = ({ value }) => <td className='text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap'>{value}</td>;
 
+  const TbodyComponent = () => {
+    return items.map((item, index) => {
+      return (
+        <tr key={`key-${index}`} className='bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100'>
+          <TdComponent value={item.name}/>
+          <TdComponent value={item.category}/>
+          <TdComponent value={item.group}/>
+          <TdComponent value={item.createdAt}/>
+          <TdComponent value={item.updatedAt}/>
+        </tr>
+      );
+    });
+  };
+
+  const TheadComponent = () => {
+    return (
+      <tr>
+        <ThComponent label='Nom'/>
+        <ThComponent label='Catégorie'/>
+        <ThComponent label="Groupe"/>
+        <ThComponent label='Date de création'/>
+        <ThComponent label='Date de mise à jour'/>
+      </tr>
+    );
+  };
+
   return (
     <>
       { items &&
         <table className='min-w-full'>
           <thead className='bg-white border-b'>
-            <tr>
-              <ThComponent label='Nom'/>
-              <ThComponent label='Catégorie'/>
-              <ThComponent label="Groupe"/>
-              <ThComponent label='Date de création'/>
-              <ThComponent label='Date de mise à jour'/>
-            </tr>
+            <TheadComponent />
           </thead>
           <tbody>
-            <tr className='bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100'>
-              <TdComponent value={items.name}/>
-              <TdComponent value={items.category}/>
-              <TdComponent value={items.group}/>
-              <TdComponent value={items.createdAt}/>
-              <TdComponent value={items.updatedAt}/>
-            </tr>
+            <TbodyComponent />
           </tbody>
         </table>
       }
