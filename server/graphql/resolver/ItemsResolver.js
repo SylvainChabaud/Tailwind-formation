@@ -1,10 +1,10 @@
 const { ItemCtrl } = require('../../controllers/itemCtrl');
 const { OK, KO } = require('./helpers');
 
-const ItemsResolver = (context) => (() => {
+const ItemsResolver = () => (() => {
   const getItemById = async itemId => {
     try {
-      const item = await ItemCtrl(context).getItemById(itemId);
+      const item = await ItemCtrl().getItemById(itemId);
       return OK({ item });
     } catch (err) {
       console.info('ERROR', err);

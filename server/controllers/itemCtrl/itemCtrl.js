@@ -1,6 +1,6 @@
 const ItemModel = require('../../services/items/items');
 
-const itemCtrl = (context) => {
+const itemCtrl = () => {
   const getItemById = itemId => {
     return ItemModel.getItemById(itemId);
   };
