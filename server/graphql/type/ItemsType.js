@@ -14,5 +14,10 @@ module.exports = {
       error: String
       item: Item
     }
+    type ItemsResponse {
+      ok: Boolean
+      error: String
+      items: [Item]
+    }
   `
 };
