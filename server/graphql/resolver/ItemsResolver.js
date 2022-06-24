@@ -12,7 +12,7 @@ const ItemsResolver = () => (() => {
       return KO('Une erreur est survenue');
     }
   };
-  
+
   const getItemById = async itemId => {
     if (!itemId) return KO('Aucun id renseigné');
     try {
