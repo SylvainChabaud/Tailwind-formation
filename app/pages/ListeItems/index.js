@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { QItemsQuery as query } from '../../_graphql/queries/QItems';
-
 import { fetchQuery, useRelayEnvironment } from 'react-relay';
+import { ThComponent, TbodyComponent } from './tableComponents';
 
 const ListeItems = () => {
   const environment = useRelayEnvironment();
@@ -25,23 +25,6 @@ const ListeItems = () => {
     return () => (hasBeenCancelled = true);
   }, []);
 
-  const ThComponent = ({ label }) => <th scope='col' className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>{label}</th>;
-  const TdComponent = ({ value }) => <td className='text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap'>{value}</td>;
-
-  const TbodyComponent = () => {
-    return items.map((item, index) => {
-      return (
-        <tr key={`key-${index}`} className='bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100'>
-          <TdComponent value={item.name}/>
-          <TdComponent value={item.category}/>
-          <TdComponent value={item.group}/>
-          <TdComponent value={item.createdAt}/>
-          <TdComponent value={item.updatedAt}/>
-        </tr>
-      );
-    });
-  };
-
   return (
     <>
       { items &&
@@ -56,7 +39,7 @@ const ListeItems = () => {
             </tr>
           </thead>
           <tbody>
-            <TbodyComponent />
+            <TbodyComponent items={items}/>
           </tbody>
         </table>
       }
