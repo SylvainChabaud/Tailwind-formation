@@ -2,7 +2,19 @@ const { ItemCtrl } = require('../../controllers/itemCtrl');
 const { OK, KO } = require('./helpers');
 
 const ItemsResolver = () => (() => {
+  const createItem = async itemToCreate => {
+    if (!itemToCreate) return KO('Aucun item renseigné');
+    try {
+      const item = await ItemCtrl().createItem(itemToCreate);
+      return OK({ item });
+    } catch (err) {
+      console.info('ERROR', err);
+      return KO('Une erreur est survenue');
+    }
+  };
+
   const getItemById = async itemId => {
+    if (!itemId) return KO('Aucun id renseigné');
     try {
       const item = await ItemCtrl().getItemById(itemId);
       return OK({ item });
@@ -23,6 +35,7 @@ const ItemsResolver = () => (() => {
   };
 
   return {
+    createItem,
     getItemById,
     getItems
   };

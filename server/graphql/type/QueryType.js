@@ -9,6 +9,9 @@ module.exports = {
       getItemById(itemId: ID!): ItemResponse
       getItems: ItemsResponse
     }
+    type Mutation {
+      createItem(itemToCreate: ItemToCreate): ItemResponse
+    }
   `,
   resolvers: {
     Query: {
@@ -16,6 +19,9 @@ module.exports = {
       getBeneficiaries: (parent, { subscriberId }, context) => Promise.resolve(),
       getItemById: (parent, { itemId }, context) => ItemsResolver(context).getItemById(itemId),
       getItems: (parent, arg, context) => ItemsResolver(context).getItems()
+    },
+    Mutation: {
+      createItem: (parent, { itemToCreate }, context) => ItemsResolver(context).createItem(itemToCreate)
     }
   }
 };

@@ -19,5 +19,10 @@ module.exports = {
       error: String
       items: [Item]
     }
+    input ItemToCreate {
+      name: String
+      category: String
+      group: String
+    }
   `
 };

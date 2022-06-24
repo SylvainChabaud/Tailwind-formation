@@ -141,6 +141,12 @@ type ItemResponse {
   ok: Boolean
 }
 
+input ItemToCreate {
+  category: String
+  group: String
+  name: String
+}
+
 type ItemsResponse {
   error: String
   items: [Item]
@@ -153,6 +159,7 @@ type Mutation {
   SubscriberBeneficiaryInformation(input: SubscriberBeneficiaryInformationInput!): SubscriberBeneficiaryInformationMutationResponse
   SubscriberInformation(input: SubscriberInformationInput!): SubscriberInformationMutationResponse
   SubscriberOffer(input: SubscriberOfferInput!): SubscriberOfferMutationResponse
+  createItem(itemToCreate: ItemToCreate): ItemResponse
   initializeBeneficiaries(beneficiaries: BeneficiariesInput!): DefaultMutationResponse
   onSigned(subscriberId: String!): DefaultMutationResponse
   subscriberSurveyAnswers(question1: String!, question2: String!, subscriberId: String!): DefaultMutationResponse

@@ -1,6 +1,10 @@
 const ItemModel = require('../../services/items/items');
 
 const itemCtrl = () => {
+  const createItem = itemToCreate => {
+    return ItemModel.createItem(itemToCreate);
+  };
+
   const getItemById = itemId => {
     return ItemModel.getItemById(itemId);
   };
@@ -10,6 +14,7 @@ const itemCtrl = () => {
   };
 
   return {
+    createItem,
     getItemById,
     getItems
   };

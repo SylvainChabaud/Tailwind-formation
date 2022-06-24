@@ -5,7 +5,12 @@ var { ItemsResolver } = require('../server/graphql/resolver');
 var { dbMongo } = require('../server/lib/options/dbMongo');
 
 const currentDate = new Date();
-const mockItems = [
+const mockItemsToCreate = {
+  name: 'Marty',
+  category: 'B',
+  group: 'Admin'
+};
+const mockItemsToFind = [
   {
     _id: '62b1d766d17eae3c700030dd',
     name: 'John',
@@ -27,7 +32,7 @@ const mockItems = [
 describe.only('itemResolver', function () {
   let handler;
   beforeEach(async () => {
-    await handler.insertMany(mockItems);
+    await handler.insertMany(mockItemsToFind);
   });
 
   before(async () => {
@@ -56,16 +61,16 @@ describe.only('itemResolver', function () {
       expect((response.item.updatedAt).getTime()).to.equal(currentDate.getTime());
     });
 
-    it('should return an ERROR when ID is NOT found', async () => {
+    it('should return ERROR when ID is NOT found', async () => {
       const response = await ItemsResolver().getItemById('62b1d766d17eae3c700030df');
       expect(response.ok).to.equal(true);
       expect(response.item).to.equal(null);
     });
 
-    it('should return NULL ITEM when no ID input argument', async () => {
+    it('should return FALSE when no ID input argument is given', async () => {
       const response = await ItemsResolver().getItemById();
-      expect(response.ok).to.equal(true);
-      expect(response.item).to.equal(null);
+      expect(response.ok).to.equal(false);
+      expect(response.error).to.equal('Aucun id renseigné');
     });
   });
 
@@ -86,6 +91,22 @@ describe.only('itemResolver', function () {
       expect(response.items[1].category).to.equal('B');
       expect((response.items[1].createdAt).getTime()).to.equal(currentDate.getTime());
       expect((response.items[1].updatedAt).getTime()).to.equal(currentDate.getTime());
+    });
+  });
+
+  describe('#createItem()', function () {
+    it('should return ITEM created', async () => {
+      const response = await ItemsResolver().createItem(mockItemsToCreate);
+      expect(response.ok).to.equal(true);
+      expect(response.item.name).to.equal('Marty');
+      expect(response.item.group).to.equal('Admin');
+      expect(response.item.category).to.equal('B');
+    });
+
+    it('should return FALSE when no item parameter is given', async () => {
+      const response = await ItemsResolver().createItem();
+      expect(response.ok).to.equal(false);
+      expect(response.error).to.equal('Aucun item renseigné');
     });
   });
 });
