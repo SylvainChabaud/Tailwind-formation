@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash ff7b03ff40d7bee7fd3c5589cb16d0a1
+ * @relayHash 6d5c79c9205df68ec6f13fc7ddf7ebd0
  */
 
 /* eslint-disable */
@@ -22,6 +22,7 @@ export type createItemMutationResponse = {|
     +ok: ?boolean,
     +error: ?string,
     +item: ?{|
+      +_id: string,
       +name: ?string,
       +category: ?string,
       +group: ?string,
@@ -45,6 +46,7 @@ mutation createItemMutation(
     ok
     error
     item {
+      _id
       name
       category
       group
@@ -100,6 +102,13 @@ v1 = [
         "name": "item",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "_id",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -160,7 +169,7 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "id": "ff7b03ff40d7bee7fd3c5589cb16d0a1",
+    "id": "6d5c79c9205df68ec6f13fc7ddf7ebd0",
     "metadata": {},
     "name": "createItemMutation",
     "operationKind": "mutation",
@@ -169,6 +178,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'da630cc1e6fe544b25c374851dc529a7';
+(node/*: any*/).hash = '7ecda533e2ef9a36d5a7588cf56e2e91';
 
 module.exports = node;

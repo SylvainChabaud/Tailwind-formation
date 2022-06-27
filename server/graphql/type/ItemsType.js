@@ -3,6 +3,7 @@ const { gql } = require('apollo-server-express');
 module.exports = {
   typeDefs: gql`
     type Item {
+      _id: ID!
       name: String
       category: String
       group: String

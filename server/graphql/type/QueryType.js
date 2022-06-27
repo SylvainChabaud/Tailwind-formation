@@ -11,6 +11,7 @@ module.exports = {
     }
     type Mutation {
       createItem(itemToCreate: ItemToCreate): ItemResponse
+      deleteItem(itemIdToDelete: ID!): Boolean
     }
   `,
   resolvers: {
@@ -21,7 +22,8 @@ module.exports = {
       getItems: (parent, arg, context) => ItemsResolver(context).getItems()
     },
     Mutation: {
-      createItem: (parent, { itemToCreate }, context) => ItemsResolver(context).createItem(itemToCreate)
+      createItem: (parent, { itemToCreate }, context) => ItemsResolver(context).createItem(itemToCreate),
+      deleteItem: (parent, { itemIdToDelete }, context) => ItemsResolver(context).deleteItem(itemIdToDelete)
     }
   }
 };

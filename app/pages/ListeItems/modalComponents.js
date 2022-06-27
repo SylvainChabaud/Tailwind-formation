@@ -6,8 +6,7 @@ const SvgcloseIcon = (props) => {
     <svg
       role='button'
       onClick={() => setIsModal(false)}
-      style={{ cursor: 'pointer' }}
-      className="h-6 w-6 text-yellow-500"
+      className="cursor-pointer h-6 w-6 text-yellow-500"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"

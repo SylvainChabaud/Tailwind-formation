@@ -128,6 +128,7 @@ enum GenderEnum {
 }
 
 type Item {
+  _id: ID!
   category: String
   createdAt: String
   group: String
@@ -160,6 +161,7 @@ type Mutation {
   SubscriberInformation(input: SubscriberInformationInput!): SubscriberInformationMutationResponse
   SubscriberOffer(input: SubscriberOfferInput!): SubscriberOfferMutationResponse
   createItem(itemToCreate: ItemToCreate): ItemResponse
+  deleteItem(itemIdToDelete: ID!): Boolean
   initializeBeneficiaries(beneficiaries: BeneficiariesInput!): DefaultMutationResponse
   onSigned(subscriberId: String!): DefaultMutationResponse
   subscriberSurveyAnswers(question1: String!, question2: String!, subscriberId: String!): DefaultMutationResponse

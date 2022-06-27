@@ -10,6 +10,7 @@ const mutation = graphql`
       ok
       error
       item {
+        _id
         name
         category
         group

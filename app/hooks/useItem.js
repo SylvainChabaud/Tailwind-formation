@@ -1,20 +1,36 @@
 import onCreateItemMutation from '../_graphql/mutations/item/createItemMutation';
+// import onDeleteItemMutation from '../_graphql/mutations/item/deleteItemMutation';
 
-const useItem = (addItem, setIsError, hasBeenCancelled) => {
+const useItem = (fctOnItem, setIsError, hasBeenCancelled) => {
   const onCreateItem = itemToCreate => {
     onCreateItemMutation({ itemToCreate }, (ok, error, item) => {
       if (ok && !hasBeenCancelled) {
-        addItem(item);
+        console.info('ITEM ADDED', item);
+        fctOnItem(item);
         setIsError(null);
       } else if (!ok && !hasBeenCancelled) {
-        addItem(null);
+        fctOnItem(null);
         setIsError(error);
       }
     });
   };
 
+  const onDeleteItem = itemIdToDelete => {
+    // onDeleteItemMutation({ itemIdToDelete }, (ok, error, item) => {
+    //   if (ok && !hasBeenCancelled) {
+    //     console.info('ITEM DELETED', item);
+    //     fctOnItem(itemIdToDelete);
+    //     setIsError(null);
+    //   } else if (!ok && !hasBeenCancelled) {
+    //     fctOnItem(null);
+    //     setIsError(error);
+    //   }
+    // });
+  };
+
   return {
-    onCreateItem
+    onCreateItem,
+    onDeleteItem
   };
 };
 

@@ -16,6 +16,7 @@ const ListeItems = () => {
     const fetchData = async () => {
       try {
         const { getItems: result } = await fetchQuery(environment, getItemsQuery, {}).toPromise();
+        console.info('result', result);
         if (result.ok && !hasBeenCancelled) {
           setItems(result.items);
           setIsError(null);
@@ -35,10 +36,16 @@ const ListeItems = () => {
   }, []);
 
   const addItem = createdItem => createdItem && setItems([...items, createdItem]);
-
   const onCreateItem = itemToCreate => {
     useItem(addItem, setIsError, hasBeenCancelled).onCreateItem(itemToCreate);
     setIsModal(false);
+  };
+
+  // const removeItem = itemIdToDelete => itemIdToDelete;
+  const onDeleteItem = itemIdToDelete => {
+    console.info('DELETE ITEM', itemIdToDelete);
+    // useItem(removeItem, setIsError, hasBeenCancelled).onDeleteItem(itemIdToDelete);
+    // setIsModal(false);
   };
 
   return (
@@ -69,7 +76,7 @@ const ListeItems = () => {
               </tr>
             </thead>
             <tbody>
-              <TbodyComponent items={items} />
+              <TbodyComponent items={items} onDeleteItem={onDeleteItem} />
             </tbody>
           </table>
         </>

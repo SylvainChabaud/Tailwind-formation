@@ -25,7 +25,10 @@ const ItemModel = (() => {
 
   const updateItem = () => {};
 
-  const deleteItem = () => {};
+  const deleteItem = async itemId => {
+    const handler = await getCollectionHandler();
+    return handler.deleteOne({ _id: itemId });
+  };
 
   return {
     createItem,

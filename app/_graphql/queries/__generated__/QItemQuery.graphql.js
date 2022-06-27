@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash c08ac2740e2aff39ce898e56e3c6a97e
+ * @relayHash d47de9bd0165d96d87a5b94b96e8d39f
  */
 
 /* eslint-disable */
@@ -17,6 +17,7 @@ export type QItemQueryResponse = {|
     +ok: ?boolean,
     +error: ?string,
     +item: ?{|
+      +_id: string,
       +name: ?string,
       +category: ?string,
       +group: ?string,
@@ -40,6 +41,7 @@ query QItemQuery(
     ok
     error
     item {
+      _id
       name
       category
       group
@@ -95,6 +97,13 @@ v1 = [
         "name": "item",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "_id",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -155,7 +164,7 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "id": "c08ac2740e2aff39ce898e56e3c6a97e",
+    "id": "d47de9bd0165d96d87a5b94b96e8d39f",
     "metadata": {},
     "name": "QItemQuery",
     "operationKind": "query",
@@ -164,6 +173,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '83aecee2d1d57e78c74239dd76ea3eb2';
+(node/*: any*/).hash = '7a4d4e8477c008ad31c7d3be65ecc2f8';
 
 module.exports = node;

@@ -24,10 +24,20 @@ const ItemsResolver = () => (() => {
     }
   };
 
-  const getItems = async (context) => {
+  const getItems = async () => {
     try {
-      const items = await ItemCtrl(context).getItems();
+      const items = await ItemCtrl().getItems();
       return OK({ items });
+    } catch (err) {
+      console.info('ERROR', err);
+      return KO('Une erreur est survenue');
+    }
+  };
+
+  const deleteItems = async itemId => {
+    try {
+      const isDeletedItem = await ItemCtrl().deleteItem(itemId);
+      return OK({ isDeletedItem });
     } catch (err) {
       console.info('ERROR', err);
       return KO('Une erreur est survenue');
@@ -37,7 +47,8 @@ const ItemsResolver = () => (() => {
   return {
     createItem,
     getItemById,
-    getItems
+    getItems,
+    deleteItems
   };
 })();
 
