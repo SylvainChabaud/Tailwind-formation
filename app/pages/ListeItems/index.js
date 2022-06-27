@@ -7,50 +7,66 @@ import { ModalComponent } from './modalComponents';
 
 const ListeItems = () => {
   const environment = useRelayEnvironment();
+  const [hasBeenCancelled, setHasBeenCancelled] = useState(false);
   const [items, setItems] = useState(null);
   const [isModal, setIsModal] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState(null);
   const [commitMutation] = useMutation(createItemQuery);
 
   useEffect(() => {
-    let hasBeenCancelled = false;
     const fetchData = async () => {
       try {
         const { getItems: result } = await fetchQuery(environment, getItemsQuery, {}).toPromise();
         if (result.ok && !hasBeenCancelled) {
-          console.error('result ', result);
           setItems(result.items);
-          setIsError(result.ok);
+          setIsError(null);
+        } else if (!(result.ok) && !hasBeenCancelled) {
+          setItems(null);
+          setIsError(result.error);
         }
-      } catch (e) {
-        console.error('GET ITEMS ERROR : ', e);
-        setIsError(true);
-        return null;
+      } catch (err) {
+        console.error('error ', err);
+        setItems(null);
+        setIsError('Une erreur est survenue');
       }
     };
     fetchData();
 
-    return () => (hasBeenCancelled = true);
+    return () => setHasBeenCancelled(true);
   }, []);
 
   const onCreateItem = itemToCreate => {
     const fetchData = () => {
-      commitMutation({
-        variables: {
-          itemToCreate
-        },
-        onCompleted (data) {
-          setItems([...items, data.createItem.item]);
-          setIsModal(false);
-        }
-      });
+      commitMutation(
+        {
+          variables: {
+            itemToCreate,
+            toto: ''
+          },
+          onCompleted ({ createItem: result }) {
+            if (result.ok && !hasBeenCancelled) {
+              setItems([...items, result.item]);
+              setIsError(null);
+            } else if (!(result.ok) && !hasBeenCancelled) {
+              setItems(null);
+              setIsError(result.error);
+            }
+          },
+          onError: err => {
+            console.error('error ', err);
+            setItems(null);
+            setIsError('Une erreur est survenue');
+          }
+        });
     };
     fetchData();
+    setIsModal(false);
   };
 
   return (
     <>
-      { items &&
+      { isError ? <>{isError}</>
+        : items &&
         <>
           <button
             name='itemCreationModal'

@@ -3,12 +3,19 @@ import {
   graphql
 } from 'react-relay';
 
-import environment from '../../.';
+import environment from '../..';
 const mutation = graphql`
-  mutation onSignedMutation($subscriberId: String!) {
-    onSigned(subscriberId: $subscriberId) {
+  mutation QCreateItemMutation($itemToCreate: ItemToCreate) {
+    createItem(itemToCreate: $itemToCreate) {
       ok
       error
+      item {
+        name
+        category
+        group
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
