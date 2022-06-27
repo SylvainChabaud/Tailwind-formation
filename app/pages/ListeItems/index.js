@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { QItemsQuery as getItemsQuery } from '../../_graphql/queries/QItems';
-import { QCreateItemMutation as createItemQuery } from '../../_graphql/queries/QCreateItem';
-import { fetchQuery, useMutation, useRelayEnvironment } from 'react-relay';
+import { fetchQuery, useRelayEnvironment } from 'react-relay';
 import { ThComponent, TbodyComponent } from './tableComponents';
 import { ModalComponent } from './modalComponents';
+import { useItem } from '../../hooks';
 
 const ListeItems = () => {
   const environment = useRelayEnvironment();
@@ -11,7 +11,6 @@ const ListeItems = () => {
   const [items, setItems] = useState(null);
   const [isModal, setIsModal] = useState(false);
   const [isError, setIsError] = useState(null);
-  const [commitMutation] = useMutation(createItemQuery);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,31 +34,10 @@ const ListeItems = () => {
     return () => setHasBeenCancelled(true);
   }, []);
 
+  const addItem = createdItem => createdItem && setItems([...items, createdItem]);
+
   const onCreateItem = itemToCreate => {
-    const fetchData = () => {
-      commitMutation(
-        {
-          variables: {
-            itemToCreate,
-            toto: ''
-          },
-          onCompleted ({ createItem: result }) {
-            if (result.ok && !hasBeenCancelled) {
-              setItems([...items, result.item]);
-              setIsError(null);
-            } else if (!(result.ok) && !hasBeenCancelled) {
-              setItems(null);
-              setIsError(result.error);
-            }
-          },
-          onError: err => {
-            console.error('error ', err);
-            setItems(null);
-            setIsError('Une erreur est survenue');
-          }
-        });
-    };
-    fetchData();
+    useItem(addItem, setIsError, hasBeenCancelled).onCreateItem(itemToCreate);
     setIsModal(false);
   };
 

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash f9ccd7723a07e902d62fb45834ca036e
+ * @relayHash ff7b03ff40d7bee7fd3c5589cb16d0a1
  */
 
 /* eslint-disable */
@@ -14,10 +14,10 @@ export type ItemToCreate = {|
   group?: ?string,
   name?: ?string,
 |};
-export type QCreateItemMutationVariables = {|
+export type createItemMutationVariables = {|
   itemToCreate?: ?ItemToCreate
 |};
-export type QCreateItemMutationResponse = {|
+export type createItemMutationResponse = {|
   +createItem: ?{|
     +ok: ?boolean,
     +error: ?string,
@@ -30,15 +30,15 @@ export type QCreateItemMutationResponse = {|
     |},
   |}
 |};
-export type QCreateItemMutation = {|
-  variables: QCreateItemMutationVariables,
-  response: QCreateItemMutationResponse,
+export type createItemMutation = {|
+  variables: createItemMutationVariables,
+  response: createItemMutationResponse,
 |};
 */
 
 
 /*
-mutation QCreateItemMutation(
+mutation createItemMutation(
   $itemToCreate: ItemToCreate
 ) {
   createItem(itemToCreate: $itemToCreate) {
@@ -147,7 +147,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "QCreateItemMutation",
+    "name": "createItemMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -156,19 +156,19 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "QCreateItemMutation",
+    "name": "createItemMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "id": "f9ccd7723a07e902d62fb45834ca036e",
+    "id": "ff7b03ff40d7bee7fd3c5589cb16d0a1",
     "metadata": {},
-    "name": "QCreateItemMutation",
+    "name": "createItemMutation",
     "operationKind": "mutation",
     "text": null
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '792a33bb4338f62c45fc1dab353f529e';
+(node/*: any*/).hash = 'da630cc1e6fe544b25c374851dc529a7';
 
 module.exports = node;

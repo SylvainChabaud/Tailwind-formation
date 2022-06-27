@@ -5,7 +5,7 @@ import {
 
 import environment from '../..';
 const mutation = graphql`
-  mutation QCreateItemMutation($itemToCreate: ItemToCreate) {
+  mutation createItemMutation($itemToCreate: ItemToCreate) {
     createItem(itemToCreate: $itemToCreate) {
       ok
       error
@@ -19,22 +19,22 @@ const mutation = graphql`
     }
   }
 `;
-export default ({ subscriberId }, done) => {
+export default ({ itemToCreate }, done) => {
   const variables = {
-    subscriberId
+    itemToCreate
   };
   commitMutation(
     environment(),
     {
       mutation,
       variables,
-      onCompleted: ({ onSigned }) => {
-        const { ok, error } = onSigned;
-        done(ok, error);
+      onCompleted: ({ createItem: result }) => {
+        const { ok, error, item } = result;
+        done(ok, error, item);
       },
       onError: error => {
         console.error(error);
-        done(false, error);
+        done(true, error, null);
       }
     }
   );
