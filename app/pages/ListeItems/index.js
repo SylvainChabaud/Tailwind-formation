@@ -9,6 +9,7 @@ const ListeItems = () => {
   const environment = useRelayEnvironment();
   const [items, setItems] = useState(null);
   const [isModal, setIsModal] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [commitMutation] = useMutation(createItemQuery);
 
   useEffect(() => {
@@ -17,10 +18,13 @@ const ListeItems = () => {
       try {
         const { getItems: result } = await fetchQuery(environment, getItemsQuery, {}).toPromise();
         if (result.ok && !hasBeenCancelled) {
+          console.error('result ', result);
           setItems(result.items);
+          setIsError(result.ok);
         }
       } catch (e) {
         console.error('GET ITEMS ERROR : ', e);
+        setIsError(true);
         return null;
       }
     };
@@ -29,29 +33,17 @@ const ListeItems = () => {
     return () => (hasBeenCancelled = true);
   }, []);
 
-  const onCreateItem = (itemToCreate) => {
-    console.info('SAVE', itemToCreate);
-
+  const onCreateItem = itemToCreate => {
     const fetchData = () => {
       commitMutation({
         variables: {
           itemToCreate
         },
         onCompleted (data) {
-          console.info('result', data);
+          setItems([...items, data.createItem.item]);
+          setIsModal(false);
         }
       });
-
-      // try {
-      //   const { createItem: result } = await fetchQuery(environment, createItemQuery, itemToCreate).toPromise();
-      //   if (result.ok) {
-      //     // setItems({...items, result.item});
-      //     console.info('CREATE ITEM RESPONSE', result);
-      //   }
-      // } catch (e) {
-      //   console.error('CREATE ITEM ERROR : ', e);
-      //   return null;
-      // }
     };
     fetchData();
   };

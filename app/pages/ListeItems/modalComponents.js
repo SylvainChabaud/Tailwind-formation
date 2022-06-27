@@ -4,6 +4,7 @@ const SvgcloseIcon = (props) => {
   const { setIsModal } = props;
   return (
     <svg
+      role='button'
       onClick={() => setIsModal(false)}
       style={{ cursor: 'pointer' }}
       className="h-6 w-6 text-yellow-500"
@@ -29,6 +30,11 @@ const ModalContent = (props) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
+  const handleCreateItem = (e) => {
+    e.preventDefault();
+    onCreateItem(inputs);
+  };
+
   return (
     <div className="m-10">
       <div className="flex justify-between items-center mb-10">
@@ -36,8 +42,8 @@ const ModalContent = (props) => {
         <SvgcloseIcon {...props} />
       </div>
 
-      <div>
-        <div >
+      <form onSubmit={handleCreateItem}>
+        <div>
           <div className="mb-5">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Nom
@@ -47,7 +53,7 @@ const ModalContent = (props) => {
               type="text"
               name="name"
               id="name"
-              autoComplete="name"
+              autoComplete="on"
               className="p-4 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-slate-100"
             />
           </div>
@@ -60,7 +66,7 @@ const ModalContent = (props) => {
               onChange={onFormChange}
               id="category"
               name="category"
-              autoComplete="category"
+              autoComplete="on"
               className="p-4 mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-100"
             >
               <option>A</option>
@@ -78,43 +84,27 @@ const ModalContent = (props) => {
               type="text"
               name="group"
               id="group"
-              autoComplete="group"
+              autoComplete="on"
               className="p-4 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-slate-100"
             />
           </div>
         </div>
         <div className="flex justify-center pt-5">
           <input
-            onClick={() => onCreateItem(inputs)}
-            type='button'
+            type='submit'
             className="cursor-pointer inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             value="Créer"
           />
         </div>
-      </div>
+      </form>
     </div>
   );
 };
 
 export const ModalComponent = (props) => {
   return (
-    <div style={{
-      display: 'flex',
-      height: '100%',
-      width: '100%',
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      backgroundColor: 'rgba(200,200,200,.5)',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }}>
-      <div style={{
-        border: '1px solid grey',
-        padding: '20px',
-        backgroundColor: 'white',
-        width: '500px'
-      }}>
+    <div className='flex w-full h-full fixed top-0 left-0 justify-center items-center bg-neutral-300 bg-opacity-50'>
+      <div className='border border-current p-5 bg-white w-96'>
         <ModalContent {...props} />
       </div>
     </div>
