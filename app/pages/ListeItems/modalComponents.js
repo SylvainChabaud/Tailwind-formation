@@ -22,6 +22,8 @@ const SvgcloseIcon = (props) => {
   );
 };
 
+const optionsTab = ['A', 'B', 'C'];
+
 const ModalContent = (props) => {
   const { onCreateItem } = props;
   const [inputs, setInputs] = useState({ category: 'A' });
@@ -34,12 +36,6 @@ const ModalContent = (props) => {
     e.preventDefault();
     onCreateItem(inputs);
   };
-
-  const optionsTab = [
-    <option key='A'>A</option>,
-    <option key='B'>B</option>,
-    <option key='C'>C</option>
-  ];
 
   return (
     <div className="m-10">
@@ -75,7 +71,9 @@ const ModalContent = (props) => {
               autoComplete="on"
               className="p-4 mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-100"
             >
-              {optionsTab}
+              <option>{optionsTab[0]}</option>
+              <option>{optionsTab[1]}</option>
+              <option>{optionsTab[2]}</option>
             </select>
           </div>
 
