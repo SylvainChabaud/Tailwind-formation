@@ -11,5 +11,6 @@
   "4ab4369001d61810ee465c956aa6f92c": "mutation SubscriberOfferMutation(\n  $input: SubscriberOfferInput!\n) {\n  SubscriberOffer(input: $input) {\n    ok\n    error\n  }\n}\n",
   "d47de9bd0165d96d87a5b94b96e8d39f": "query QItemQuery(\n  $itemId: ID!\n) {\n  getItemById(itemId: $itemId) {\n    ok\n    error\n    item {\n      _id\n      name\n      category\n      group\n      createdAt\n      updatedAt\n    }\n  }\n}\n",
   "4c8b61741b59f86469197f2c4d93827c": "query QItemsQuery {\n  getItems {\n    ok\n    error\n    items {\n      _id\n      name\n      category\n      group\n      createdAt\n      updatedAt\n    }\n  }\n}\n",
-  "6d5c79c9205df68ec6f13fc7ddf7ebd0": "mutation createItemMutation(\n  $itemToCreate: ItemToCreate\n) {\n  createItem(itemToCreate: $itemToCreate) {\n    ok\n    error\n    item {\n      _id\n      name\n      category\n      group\n      createdAt\n      updatedAt\n    }\n  }\n}\n"
+  "6d5c79c9205df68ec6f13fc7ddf7ebd0": "mutation createItemMutation(\n  $itemToCreate: ItemToCreate\n) {\n  createItem(itemToCreate: $itemToCreate) {\n    ok\n    error\n    item {\n      _id\n      name\n      category\n      group\n      createdAt\n      updatedAt\n    }\n  }\n}\n",
+  "bcf3e1c94411bfe395370364797f23f8": "mutation deleteItemMutation(\n  $itemIdToDelete: ID!\n) {\n  deleteItem(itemIdToDelete: $itemIdToDelete) {\n    ok\n    error\n  }\n}\n"
 }

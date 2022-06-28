@@ -74,26 +74,6 @@ describe.only('itemResolver', function () {
     });
   });
 
-  describe('#getItems()', function () {
-    it('should return ALL ITEMS', async () => {
-      const response = await ItemsResolver().getItems();
-      expect(response.ok).to.equal(true);
-      expect(response.items[0].id).to.equal('62b1d766d17eae3c700030dd');
-      expect(response.items[0].name).to.equal('John');
-      expect(response.items[0].group).to.equal('Admin');
-      expect(response.items[0].category).to.equal('A');
-      expect((response.items[0].createdAt).getTime()).to.equal(currentDate.getTime());
-      expect((response.items[0].updatedAt).getTime()).to.equal(currentDate.getTime());
-
-      expect(response.items[1].id).to.equal('62b1d766d17eae3c700030de');
-      expect(response.items[1].name).to.equal('Mary');
-      expect(response.items[1].group).to.equal('User');
-      expect(response.items[1].category).to.equal('B');
-      expect((response.items[1].createdAt).getTime()).to.equal(currentDate.getTime());
-      expect((response.items[1].updatedAt).getTime()).to.equal(currentDate.getTime());
-    });
-  });
-
   describe('#createItem()', function () {
     it('should return ITEM created', async () => {
       const response = await ItemsResolver().createItem(mockItemsToCreate);
@@ -127,6 +107,29 @@ describe.only('itemResolver', function () {
       expect(response.items[1].category).to.equal('B');
       expect((response.items[1].createdAt).getTime()).to.equal(currentDate.getTime());
       expect((response.items[1].updatedAt).getTime()).to.equal(currentDate.getTime());
+    });
+  });
+
+  describe('#deleteItem()', function () {
+    it('should return OK when item is deleted', async () => {
+      const response = await ItemsResolver().deleteItem('62b1d766d17eae3c700030de');
+      expect(response.ok).to.equal(true);
+      expect(response.isDeletedItem.ok).to.equal(1);
+      expect(response.isDeletedItem.n).to.equal(1);
+      expect(response.isDeletedItem.deletedCount).to.equal(1);
+    });
+
+    it('should return ERROR when ID is NOT found', async () => {
+      const response = await ItemsResolver().deleteItem('62b1d766d17eae3c700030df');
+      expect(response.ok).to.equal(false);
+      expect(response.error).to.equal('Aucun élément supprimé');
+    });
+
+    it('should return FALSE when no ID input argument is given', async () => {
+      const response = await ItemsResolver().deleteItem();
+      console.info('ERROR', response);
+      expect(response.ok).to.equal(false);
+      expect(response.error).to.equal('Aucun élément supprimé');
     });
   });
 });

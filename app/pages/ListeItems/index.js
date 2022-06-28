@@ -16,7 +16,6 @@ const ListeItems = () => {
     const fetchData = async () => {
       try {
         const { getItems: result } = await fetchQuery(environment, getItemsQuery, {}).toPromise();
-        console.info('result', result);
         if (result.ok && !hasBeenCancelled) {
           setItems(result.items);
           setIsError(null);
@@ -41,12 +40,14 @@ const ListeItems = () => {
     setIsModal(false);
   };
 
-  // const removeItem = itemIdToDelete => itemIdToDelete;
-  const onDeleteItem = itemIdToDelete => {
-    console.info('DELETE ITEM', itemIdToDelete);
-    // useItem(removeItem, setIsError, hasBeenCancelled).onDeleteItem(itemIdToDelete);
-    // setIsModal(false);
+  const removeItem = itemIdToDelete => {
+    if (itemIdToDelete) {
+      var localItems = [...items];
+      localItems.splice(items.findIndex(item => item._id === itemIdToDelete), 1);
+      setItems(localItems);
+    }
   };
+  const onDeleteItem = itemIdToDelete => useItem(removeItem, setIsError, hasBeenCancelled).onDeleteItem(itemIdToDelete);
 
   return (
     <>

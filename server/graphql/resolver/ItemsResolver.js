@@ -34,10 +34,11 @@ const ItemsResolver = () => (() => {
     }
   };
 
-  const deleteItems = async itemId => {
+  const deleteItem = async itemId => {
     try {
       const isDeletedItem = await ItemCtrl().deleteItem(itemId);
-      return OK({ isDeletedItem });
+      if (isDeletedItem.deletedCount) return OK({ isDeletedItem });
+      else return KO('Aucun élément supprimé');
     } catch (err) {
       console.info('ERROR', err);
       return KO('Une erreur est survenue');
@@ -48,7 +49,7 @@ const ItemsResolver = () => (() => {
     createItem,
     getItemById,
     getItems,
-    deleteItems
+    deleteItem
   };
 })();
 

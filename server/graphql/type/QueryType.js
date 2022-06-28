@@ -11,7 +11,7 @@ module.exports = {
     }
     type Mutation {
       createItem(itemToCreate: ItemToCreate): ItemResponse
-      deleteItem(itemIdToDelete: ID!): Boolean
+      deleteItem(itemIdToDelete: ID!): ItemResponse
     }
   `,
   resolvers: {
