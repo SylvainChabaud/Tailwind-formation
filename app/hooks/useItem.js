@@ -7,7 +7,7 @@ const useItem = (addItem, setIsError, hasBeenCancelled) => {
         addItem(item);
         setIsError(null);
       } else if (!ok && !hasBeenCancelled) {
-        addItem(null);
+        addItem();
         setIsError(error);
       }
     });

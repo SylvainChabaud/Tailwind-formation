@@ -35,6 +35,12 @@ const ModalContent = (props) => {
     onCreateItem(inputs);
   };
 
+  const optionsTab = [
+    <option key='A'>A</option>,
+    <option key='B'>B</option>,
+    <option key='C'>C</option>
+  ];
+
   return (
     <div className="m-10">
       <div className="flex justify-between items-center mb-10">
@@ -69,9 +75,7 @@ const ModalContent = (props) => {
               autoComplete="on"
               className="p-4 mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-100"
             >
-              <option>A</option>
-              <option>B</option>
-              <option>C</option>
+              {optionsTab}
             </select>
           </div>
 
