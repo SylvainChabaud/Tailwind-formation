@@ -8,7 +8,10 @@ const getCollectionHandler = (collection = 'items') => {
 };
 
 const ItemModel = (() => {
-  const createItem = () => {};
+  const createItem = async itemToCreate => {
+    const handler = await getCollectionHandler();
+    return handler.create(itemToCreate);
+  };
 
   const getItemById = async itemId => {
     const handler = await getCollectionHandler();
@@ -22,7 +25,10 @@ const ItemModel = (() => {
 
   const updateItem = () => {};
 
-  const deleteItem = () => {};
+  const deleteItem = async itemId => {
+    const handler = await getCollectionHandler();
+    return handler.deleteOne({ _id: itemId });
+  };
 
   return {
     createItem,

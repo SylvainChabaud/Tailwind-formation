@@ -3,6 +3,7 @@ const { gql } = require('apollo-server-express');
 module.exports = {
   typeDefs: gql`
     type Item {
+      _id: ID!
       name: String
       category: String
       group: String
@@ -18,6 +19,11 @@ module.exports = {
       ok: Boolean
       error: String
       items: [Item]
+    }
+    input ItemToCreate {
+      name: String
+      category: String
+      group: String
     }
   `
 };

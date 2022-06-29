@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d47de9bd0165d96d87a5b94b96e8d39f
+ * @relayHash 6d5c79c9205df68ec6f13fc7ddf7ebd0
  */
 
 /* eslint-disable */
@@ -9,11 +9,16 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type QItemQueryVariables = {|
-  itemId: string
+export type ItemToCreate = {|
+  category?: ?string,
+  group?: ?string,
+  name?: ?string,
 |};
-export type QItemQueryResponse = {|
-  +getItemById: ?{|
+export type createItemMutationVariables = {|
+  itemToCreate?: ?ItemToCreate
+|};
+export type createItemMutationResponse = {|
+  +createItem: ?{|
     +ok: ?boolean,
     +error: ?string,
     +item: ?{|
@@ -26,18 +31,18 @@ export type QItemQueryResponse = {|
     |},
   |}
 |};
-export type QItemQuery = {|
-  variables: QItemQueryVariables,
-  response: QItemQueryResponse,
+export type createItemMutation = {|
+  variables: createItemMutationVariables,
+  response: createItemMutationResponse,
 |};
 */
 
 
 /*
-query QItemQuery(
-  $itemId: ID!
+mutation createItemMutation(
+  $itemToCreate: ItemToCreate
 ) {
-  getItemById(itemId: $itemId) {
+  createItem(itemToCreate: $itemToCreate) {
     ok
     error
     item {
@@ -57,7 +62,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "itemId"
+    "name": "itemToCreate"
   }
 ],
 v1 = [
@@ -66,13 +71,13 @@ v1 = [
     "args": [
       {
         "kind": "Variable",
-        "name": "itemId",
-        "variableName": "itemId"
+        "name": "itemToCreate",
+        "variableName": "itemToCreate"
       }
     ],
     "concreteType": "ItemResponse",
     "kind": "LinkedField",
-    "name": "getItemById",
+    "name": "createItem",
     "plural": false,
     "selections": [
       {
@@ -151,28 +156,28 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "QItemQuery",
+    "name": "createItemMutation",
     "selections": (v1/*: any*/),
-    "type": "Query",
+    "type": "Mutation",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "QItemQuery",
+    "name": "createItemMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "id": "d47de9bd0165d96d87a5b94b96e8d39f",
+    "id": "6d5c79c9205df68ec6f13fc7ddf7ebd0",
     "metadata": {},
-    "name": "QItemQuery",
-    "operationKind": "query",
+    "name": "createItemMutation",
+    "operationKind": "mutation",
     "text": null
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '7a4d4e8477c008ad31c7d3be65ecc2f8';
+(node/*: any*/).hash = '7ecda533e2ef9a36d5a7588cf56e2e91';
 
 module.exports = node;

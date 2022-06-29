@@ -6,6 +6,7 @@ const QItemQuery = graphql`
       ok
       error
       item {
+        _id
         name
         category
         group
