@@ -16,23 +16,17 @@ const ListeItems = () => {
     const fetchData = async () => {
       try {
         const { getItems: result } = await fetchQuery(environment, getItemsQuery, {}).toPromise();
-        if (result.ok && !hasBeenCancelled) {
-          setItems(result.items);
-          setIsError(null);
-        } else if (!(result.ok) && !hasBeenCancelled) {
-          setItems(null);
-          setIsError(result.error);
-        }
+        if (!(result.ok)) setIsError(result.error);
+        else if (!hasBeenCancelled) setItems(result.items);
       } catch (err) {
         console.error('error ', err);
-        setItems(null);
         setIsError('Une erreur est survenue');
       }
     };
     fetchData();
 
     return () => setHasBeenCancelled(true);
-  }, []);
+  }, [hasBeenCancelled]);
 
   const addItem = createdItem => createdItem && setItems([...items, createdItem]);
   const onCreateItem = itemToCreate => {

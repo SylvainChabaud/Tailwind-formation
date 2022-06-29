@@ -21,6 +21,8 @@ const SvgcloseIcon = (props) => {
   );
 };
 
+const optionsTab = ['A', 'B', 'C'];
+
 const ModalContent = (props) => {
   const { onCreateItem } = props;
   const [inputs, setInputs] = useState({ category: 'A' });
@@ -48,6 +50,7 @@ const ModalContent = (props) => {
               Nom
             </label>
             <input
+              required
               onChange={onFormChange}
               type="text"
               name="name"
@@ -68,9 +71,7 @@ const ModalContent = (props) => {
               autoComplete="on"
               className="p-4 mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-100"
             >
-              <option>A</option>
-              <option>B</option>
-              <option>C</option>
+              {optionsTab.map(option => <option key={'key-' + option}>{option}</option>)}
             </select>
           </div>
 
