@@ -50,6 +50,7 @@ const ModalContent = (props) => {
               Nom
             </label>
             <input
+              value={inputs.name}
               required
               onChange={onFormChange}
               type="text"
@@ -65,6 +66,7 @@ const ModalContent = (props) => {
               Catégorie
             </label>
             <select
+              value={inputs.category}
               onChange={onFormChange}
               id="category"
               name="category"
@@ -80,6 +82,7 @@ const ModalContent = (props) => {
               Groupe
             </label>
             <input
+              value={inputs.group}
               onChange={onFormChange}
               type="text"
               name="group"
