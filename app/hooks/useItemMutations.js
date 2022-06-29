@@ -1,7 +1,7 @@
 import onCreateItemMutation from '../_graphql/mutations/item/createItemMutation';
 import onDeleteItemMutation from '../_graphql/mutations/item/deleteItemMutation';
 
-const useItem = (fctOnItem, setIsError, hasBeenCancelled) => {
+const useItemMutations = (fctOnItem, setIsError, hasBeenCancelled) => {
   const onCreateItem = itemToCreate => {
     onCreateItemMutation({ itemToCreate }, (ok, error, item) => {
       if (!ok) setIsError(error);
@@ -22,4 +22,4 @@ const useItem = (fctOnItem, setIsError, hasBeenCancelled) => {
   };
 };
 
-export default useItem;
+export default useItemMutations;

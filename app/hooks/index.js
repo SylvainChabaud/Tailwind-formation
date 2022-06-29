@@ -5,7 +5,8 @@ import useDevice from './useDevice';
 import useBeneficiaries from './useBeneficiaries';
 import useQueryContext from './useQueryContext';
 import useModal from './useModal';
-import useItem from './useItem';
+import useItemMutations from './useItemMutations';
+import useItemQueries from './useItemQueries';
 
 export {
   useFetching,
@@ -15,5 +16,6 @@ export {
   useBeneficiaries,
   useQueryContext,
   useModal,
-  useItem
+  useItemMutations,
+  useItemQueries
 };

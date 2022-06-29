@@ -1,39 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { QItemsQuery as getItemsQuery } from '../../_graphql/queries/QItems';
-import { fetchQuery, useRelayEnvironment } from 'react-relay';
+import React, { useState } from 'react';
 import { ThComponent, TbodyComponent } from './tableComponents';
 import { ModalComponent } from './modalComponents';
-import { useItem } from '../../hooks';
+import { useItemMutations, useItemQueries } from '../../hooks';
 
 const ListeItems = () => {
-  const environment = useRelayEnvironment();
   const [hasBeenCancelled, setHasBeenCancelled] = useState(false);
   const [items, setItems] = useState(null);
   const [isModal, setIsModal] = useState(false);
   const [isError, setIsError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { getItems: result } = await fetchQuery(environment, getItemsQuery, {}).toPromise();
-        if (!(result.ok)) setIsError(result.error);
-        else if (!hasBeenCancelled) setItems(result.items);
-      } catch (err) {
-        console.error('error ', err);
-        setIsError('Une erreur est survenue');
-      }
-    };
-    fetchData();
+  // Get items
+  useItemQueries(setItems, setIsError, setHasBeenCancelled, hasBeenCancelled);
 
-    return () => setHasBeenCancelled(true);
-  }, [hasBeenCancelled]);
-
+  // Create item
   const addItem = createdItem => createdItem && setItems([...items, createdItem]);
   const onCreateItem = itemToCreate => {
-    useItem(addItem, setIsError, hasBeenCancelled).onCreateItem(itemToCreate);
+    useItemMutations(addItem, setIsError, hasBeenCancelled).onCreateItem(itemToCreate);
     setIsModal(false);
   };
 
+  // Delete item
   const removeItem = itemIdToDelete => {
     if (itemIdToDelete) {
       var localItems = [...items];
@@ -41,7 +27,7 @@ const ListeItems = () => {
       setItems(localItems);
     }
   };
-  const onDeleteItem = itemIdToDelete => useItem(removeItem, setIsError, hasBeenCancelled).onDeleteItem(itemIdToDelete);
+  const onDeleteItem = itemIdToDelete => useItemMutations(removeItem, setIsError, hasBeenCancelled).onDeleteItem(itemIdToDelete);
 
   return (
     <>
