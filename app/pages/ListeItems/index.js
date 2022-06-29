@@ -1,34 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThComponent, TbodyComponent } from './tableComponents';
-import { ModalComponent } from './modalComponents';
+import { ModalToCreateComponent } from './ModalToCreateComponent';
+import { ModalToUpdateComponent } from './ModalToUpdateComponent';
 import { useItemMutations, useItemQueries } from '../../hooks';
+
+const { useRelayEnvironment } = require('react-relay');
 
 const ListeItems = () => {
   const [hasBeenCancelled, setHasBeenCancelled] = useState(false);
   const [items, setItems] = useState(null);
-  const [isModal, setIsModal] = useState(false);
+  const [currentItem, setCurrentItem] = useState(null);
+  const [isModalToCreate, setIsModalToCreate] = useState(false);
+  const [isModalToUpdate, setIsModalToUpdate] = useState(false);
   const [isError, setIsError] = useState(null);
+  const environment = useRelayEnvironment();
 
-  // Get items
-  useItemQueries(setItems, setIsError, setHasBeenCancelled, hasBeenCancelled);
+  const getItems = () => useItemQueries(setItems, setIsError, hasBeenCancelled, environment);
+
+  // Get items at start
+  useEffect(() => {
+    getItems();
+    return () => setHasBeenCancelled(true);
+  }, [hasBeenCancelled]);
 
   // Create item
-  const addItem = createdItem => createdItem && setItems([...items, createdItem]);
   const onCreateItem = itemToCreate => {
-    useItemMutations(addItem, setIsError, hasBeenCancelled).onCreateItem(itemToCreate);
-    setIsModal(false);
+    useItemMutations(getItems, setIsError, hasBeenCancelled).onCreateItem(itemToCreate);
+    setIsModalToCreate(false);
   };
 
   // Delete item
-  const removeItem = itemIdToDelete => {
-    if (itemIdToDelete) {
-      var localItems = [...items];
-      localItems.splice(items.findIndex(item => item._id === itemIdToDelete), 1);
-      setItems(localItems);
-    }
+  const onDeleteItem = itemIdToDelete => useItemMutations(getItems, setIsError, hasBeenCancelled).onDeleteItem(itemIdToDelete);
+
+  // Update item
+  const onUpdateItem = itemToUpdate => {
+    useItemMutations(getItems, setIsError, hasBeenCancelled).onUpdateItem(currentItem._id, itemToUpdate);
+    setIsModalToUpdate(false);
   };
 
-  const onDeleteItem = itemIdToDelete => useItemMutations(removeItem, setIsError, hasBeenCancelled).onDeleteItem(itemIdToDelete);
+  // ON MODAL FOR UPDATE
+  const onUpdateModal = currentItem => {
+    setCurrentItem(currentItem);
+    setIsModalToUpdate(true);
+  };
 
   return (
     <>
@@ -37,7 +51,7 @@ const ListeItems = () => {
         <>
           <button
             name='itemCreationModal'
-            onClick={ () => setIsModal(true) }
+            onClick={ () => setIsModalToCreate(true) }
             className="my-10 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
             type="button"
             data-modal-toggle="itemCreationModal"
@@ -45,7 +59,8 @@ const ListeItems = () => {
             AJOUTER UN ITEM
           </button>
 
-          { isModal && <ModalComponent setIsModal={setIsModal} onCreateItem={onCreateItem} /> }
+          { isModalToCreate && <ModalToCreateComponent setIsModalToCreate={setIsModalToCreate} onCreateItem={onCreateItem} /> }
+          { isModalToUpdate && <ModalToUpdateComponent setIsModalToUpdate={setIsModalToUpdate} onUpdateItem={onUpdateItem} currentItem={currentItem} /> }
 
           <table className='min-w-full'>
             <thead className='bg-white border-b'>
@@ -58,7 +73,7 @@ const ListeItems = () => {
               </tr>
             </thead>
             <tbody>
-              <TbodyComponent items={items} onDeleteItem={onDeleteItem} />
+              <TbodyComponent items={items} onDeleteItem={onDeleteItem} onUpdateModal={onUpdateModal}/>
             </tbody>
           </table>
         </>

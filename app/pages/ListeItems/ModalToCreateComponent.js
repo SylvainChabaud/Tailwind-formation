@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-const SvgcloseIcon = (props) => {
-  const { setIsModal } = props;
+const SvgcloseIcon = props => {
+  const { setIsModalToCreate } = props;
   return (
     <svg
       role='button'
-      onClick={() => setIsModal(false)}
+      onClick={() => setIsModalToCreate(false)}
       className="cursor-pointer h-6 w-6 text-yellow-500"
       fill="none"
       viewBox="0 0 24 24"
@@ -23,7 +23,7 @@ const SvgcloseIcon = (props) => {
 
 const optionsTab = ['A', 'B', 'C'];
 
-const ModalContent = (props) => {
+const ModalContent = props => {
   const { onCreateItem } = props;
   const [inputs, setInputs] = useState({ category: 'A' });
 
@@ -104,7 +104,7 @@ const ModalContent = (props) => {
   );
 };
 
-export const ModalComponent = (props) => {
+export const ModalToCreateComponent = props => {
   return (
     <div className='flex w-full h-full fixed top-0 left-0 justify-center items-center bg-neutral-300 bg-opacity-50'>
       <div className='border border-current p-5 bg-white w-96'>

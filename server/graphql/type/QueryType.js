@@ -12,7 +12,7 @@ module.exports = {
     type Mutation {
       createItem(itemToCreate: ItemToCreate): ItemResponse
       deleteItem(itemIdToDelete: ID!): ItemResponse
-      updateItem(itemIdToUpdate: ID!): ItemResponse
+      updateItem(itemIdToUpdate: ID!, itemToUpdate: ItemToCreate): ItemResponse
     }
   `,
   resolvers: {

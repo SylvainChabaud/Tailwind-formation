@@ -165,7 +165,7 @@ type Mutation {
   initializeBeneficiaries(beneficiaries: BeneficiariesInput!): DefaultMutationResponse
   onSigned(subscriberId: String!): DefaultMutationResponse
   subscriberSurveyAnswers(question1: String!, question2: String!, subscriberId: String!): DefaultMutationResponse
-  updateItem(itemIdToUpdate: ID!): ItemResponse
+  updateItem(itemIdToUpdate: ID!, itemToUpdate: ItemToCreate): ItemResponse
 }
 
 interface MutationResponse {
