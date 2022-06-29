@@ -27,6 +27,7 @@ const ListeItems = () => {
       setItems(localItems);
     }
   };
+
   const onDeleteItem = itemIdToDelete => useItemMutations(removeItem, setIsError, hasBeenCancelled).onDeleteItem(itemIdToDelete);
 
   return (
