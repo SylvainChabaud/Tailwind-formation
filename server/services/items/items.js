@@ -13,9 +13,9 @@ const ItemModel = (() => {
     return handler.create(itemToCreate);
   };
 
-  const getItemById = async itemId => {
+  const getItemById = async itemIdToGet => {
     const handler = await getCollectionHandler();
-    return handler.findOne({ _id: itemId });
+    return handler.findOne({ _id: itemIdToGet });
   };
 
   const getItems = async () => {
@@ -23,11 +23,14 @@ const ItemModel = (() => {
     return handler.find();
   };
 
-  const updateItem = () => {};
-
-  const deleteItem = async itemId => {
+  const updateItem = async (itemIdToUpdate, itemToUpdate) => {
     const handler = await getCollectionHandler();
-    return handler.deleteOne({ _id: itemId });
+    return handler.updateOne({ _id: itemIdToUpdate }, { $set: itemToUpdate });
+  };
+
+  const deleteItem = async itemIdToDelete => {
+    const handler = await getCollectionHandler();
+    return handler.deleteOne({ _id: itemIdToDelete });
   };
 
   return {

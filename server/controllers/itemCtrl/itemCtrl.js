@@ -5,23 +5,28 @@ const itemCtrl = () => {
     return ItemModel.createItem(itemToCreate);
   };
 
-  const getItemById = itemId => {
-    return ItemModel.getItemById(itemId);
+  const getItemById = itemIdToGet => {
+    return ItemModel.getItemById(itemIdToGet);
   };
 
   const getItems = () => {
     return ItemModel.getItems();
   };
 
-  const deleteItem = itemId => {
-    return ItemModel.deleteItem(itemId);
+  const deleteItem = itemIdToDelete => {
+    return ItemModel.deleteItem(itemIdToDelete);
+  };
+
+  const updateItem = (itemIdToUpdate, itemToUpdate) => {
+    return ItemModel.updateItem(itemIdToUpdate, itemToUpdate);
   };
 
   return {
     createItem,
     getItemById,
     getItems,
-    deleteItem
+    deleteItem,
+    updateItem
   };
 };
 
