@@ -1,10 +1,10 @@
 import React from 'react';
 
-const SvgDeleteIcon = ({ itemIdToDelete, onDeleteItem }) => {
+const SvgDeleteIcon = ({ onClick }) => {
   return (
     <svg
       role='button'
-      onClick={() => onDeleteItem(itemIdToDelete)}
+      onClick={onClick}
       className="cursor-pointer h-5 w-5 text-blue-500 my-5 mx-1"
       width="24" height="24"
       viewBox="0 0 24 24"
@@ -24,11 +24,11 @@ const SvgDeleteIcon = ({ itemIdToDelete, onDeleteItem }) => {
   );
 };
 
-const SvgEditIcon = ({ currentItem, onUpdateModal }) => {
+const SvgEditIcon = ({ onClick }) => {
   return (
     <svg
       role='button'
-      onClick={() => onUpdateModal(currentItem)}
+      onClick={onClick}
       className="cursor-pointer h-5 w-5 text-blue-500 my-5 mx-1"
       width="24" height="24"
       viewBox="0 0 24 24"
@@ -62,8 +62,8 @@ export const TbodyComponent = ({ items, onDeleteItem, onUpdateModal }) => {
         <TdComponent>{item.updatedAt}</TdComponent>
         <TdComponent>
           <div className='flex'>
-            <SvgDeleteIcon itemIdToDelete={item._id} onDeleteItem={onDeleteItem}/>
-            <SvgEditIcon currentItem={item} onUpdateModal={onUpdateModal}/>
+            <SvgDeleteIcon onClick={() => onDeleteItem(item._id)}/>
+            <SvgEditIcon onClick={() => onUpdateModal(item)}/>
           </div>
         </TdComponent>
       </tr>

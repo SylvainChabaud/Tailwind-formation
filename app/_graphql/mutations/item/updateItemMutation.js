@@ -24,8 +24,8 @@ export default ({ itemIdToUpdate, itemToUpdate }, done) => {
     {
       mutation,
       variables,
-      onCompleted: ({ updateItem: result }) => {
-        const { ok, error } = result;
+      onCompleted: ({ updateItem }) => {
+        const { ok, error } = updateItem;
         done(ok, error);
       },
       onError: error => {
