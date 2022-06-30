@@ -25,7 +25,11 @@ const optionsTab = ['A', 'B', 'C'];
 
 const ModalContent = props => {
   const { onUpdateItem, currentItem } = props;
-  const [inputs, setInputs] = useState({ category: 'A' });
+  const [inputs, setInputs] = useState({
+    name: '',
+    category: 'A',
+    group: ''
+  });
 
   useEffect(() => {
     setInputs({
