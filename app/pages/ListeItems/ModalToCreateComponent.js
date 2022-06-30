@@ -25,7 +25,11 @@ const optionsTab = ['A', 'B', 'C'];
 
 const ModalContent = props => {
   const { onCreateItem } = props;
-  const [inputs, setInputs] = useState({ category: 'A' });
+  const [inputs, setInputs] = useState({
+    name: '',
+    category: 'A',
+    group: ''
+  });
 
   const onFormChange = e => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });

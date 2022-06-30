@@ -60,10 +60,10 @@ export const TbodyComponent = ({ items, onDeleteItem, onUpdateModal }) => {
         <TdComponent value={item.group}/>
         <TdComponent value={item.createdAt}/>
         <TdComponent value={item.updatedAt}/>
-        <div className='flex'>
+        <td className='flex'>
           <SvgDeleteIcon itemIdToDelete={item._id} onDeleteItem={onDeleteItem}/>
           <SvgEditIcon currentItem={item} onUpdateModal={onUpdateModal}/>
-        </div>
+        </td>
       </tr>
     );
   });
