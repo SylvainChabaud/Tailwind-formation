@@ -70,6 +70,7 @@ const ListeItems = () => {
                 <ThComponent label="Groupe"/>
                 <ThComponent label='Date de création'/>
                 <ThComponent label='Date de mise à jour'/>
+                <ThComponent label='Outils'/>
               </tr>
             </thead>
             <tbody>
