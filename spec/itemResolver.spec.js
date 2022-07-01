@@ -28,6 +28,11 @@ const mockItemsToFind = [
     updatedAt: currentDate
   }
 ];
+const mockItemToUpdate = {
+  name: 'JohnUpdated',
+  category: 'A',
+  group: 'Admin'
+};
 
 describe.only('itemResolver', function () {
   let handler;
@@ -113,10 +118,8 @@ describe.only('itemResolver', function () {
   describe('#deleteItem()', function () {
     it('should return OK when item is deleted', async () => {
       const response = await ItemsResolver().deleteItem('62b1d766d17eae3c700030de');
+      console.info('RETRUN', response);
       expect(response.ok).to.equal(true);
-      expect(response.isDeletedItem.ok).to.equal(1);
-      expect(response.isDeletedItem.n).to.equal(1);
-      expect(response.isDeletedItem.deletedCount).to.equal(1);
     });
 
     it('should return ERROR when ID is NOT found', async () => {
@@ -127,9 +130,27 @@ describe.only('itemResolver', function () {
 
     it('should return FALSE when no ID input argument is given', async () => {
       const response = await ItemsResolver().deleteItem();
-      console.info('ERROR', response);
       expect(response.ok).to.equal(false);
       expect(response.error).to.equal('Aucun élément supprimé');
+    });
+  });
+
+  describe('#updateItem()', function () {
+    it('should return OK when ITEM is updated', async () => {
+      const response = await ItemsResolver().updateItem('62b1d766d17eae3c700030de', mockItemToUpdate);
+      expect(response.ok).to.equal(true);
+    });
+
+    it('should return ERROR when ID is NOT found', async () => {
+      const response = await ItemsResolver().updateItem('62b1d766d17eae3c700030df', mockItemToUpdate);
+      expect(response.ok).to.equal(false);
+      expect(response.error).to.equal('Aucun élément mise à jour');
+    });
+
+    it('should return ERROR when NO ID input argument is given', async () => {
+      const response = await ItemsResolver().updateItem(undefined, mockItemToUpdate);
+      expect(response.ok).to.equal(false);
+      expect(response.error).to.equal('Aucun élément mise à jour');
     });
   });
 });

@@ -1,82 +1,73 @@
-import React, { useEffect, useState } from 'react';
-import { QItemsQuery as getItemsQuery } from '../../_graphql/queries/QItems';
-import { fetchQuery, useRelayEnvironment } from 'react-relay';
+import React, { useState } from 'react';
 import { ThComponent, TbodyComponent } from './tableComponents';
-import { ModalComponent } from './modalComponents';
-import { useItem } from '../../hooks';
+import ModalEditItem from './ModalEditItem';
+import { useItemQueries } from '../../hooks';
+import { compose, not, isNil, prop } from 'ramda';
+import useItems from './useItems';
 
 const ListeItems = () => {
-  const environment = useRelayEnvironment();
-  const [hasBeenCancelled, setHasBeenCancelled] = useState(false);
-  const [items, setItems] = useState(null);
-  const [isModal, setIsModal] = useState(false);
+  const [currentItem, setCurrentItem] = useState(null);
+  const [isOpenModal, setOpenModal] = useState(false);
   const [isError, setIsError] = useState(null);
+  const { items, refetch: refetchItems } = useItemQueries();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { getItems: result } = await fetchQuery(environment, getItemsQuery, {}).toPromise();
-        if (!(result.ok)) setIsError(result.error);
-        else if (!hasBeenCancelled) setItems(result.items);
-      } catch (err) {
-        console.error('error ', err);
-        setIsError('Une erreur est survenue');
-      }
-    };
-    fetchData();
+  const onResultChangeItem = (ok, error) => {
+    if (!ok) return setIsError(error);
 
-    return () => setHasBeenCancelled(true);
-  }, [hasBeenCancelled]);
-
-  const addItem = createdItem => createdItem && setItems([...items, createdItem]);
-  const onCreateItem = itemToCreate => {
-    useItem(addItem, setIsError, hasBeenCancelled).onCreateItem(itemToCreate);
-    setIsModal(false);
+    refetchItems();
+    setOpenModal(false);
+    setCurrentItem(null);
   };
 
-  const removeItem = itemIdToDelete => {
-    if (itemIdToDelete) {
-      var localItems = [...items];
-      localItems.splice(items.findIndex(item => item._id === itemIdToDelete), 1);
-      setItems(localItems);
+  const { onCreateItem, onDeleteItem, onUpdateItem } = useItems(onResultChangeItem);
+
+  // ON MODAL FOR UPDATE
+  const onUpdateModal = item => {
+    setCurrentItem(item);
+    setOpenModal(true);
+  };
+
+  const handleSubmit = (inputs) => {
+    if (compose(not, isNil, prop('_id'))(currentItem)) {
+      onUpdateItem(currentItem._id, inputs);
+    } else {
+      onCreateItem(inputs);
     }
   };
-  const onDeleteItem = itemIdToDelete => useItem(removeItem, setIsError, hasBeenCancelled).onDeleteItem(itemIdToDelete);
+
+  const handleCloseModal = () => setOpenModal(false);
 
   return (
-    <>
-      { isError ? <>{isError}</>
-        : items &&
-        <>
-          <button
-            name='itemCreationModal'
-            onClick={ () => setIsModal(true) }
-            className="my-10 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-            type="button"
-            data-modal-toggle="itemCreationModal"
-          >
-            AJOUTER UN ITEM
-          </button>
+    <div>
+      {isError && <p>{isError}</p>}
+      <button
+        name='itemCreationModal'
+        onClick={ () => setOpenModal(true) }
+        className="my-10 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        type="button"
+        data-modal-toggle="itemCreationModal"
+      >
+        AJOUTER UN ITEM
+      </button>
 
-          { isModal && <ModalComponent setIsModal={setIsModal} onCreateItem={onCreateItem} /> }
+      {isOpenModal && <ModalEditItem onClose={handleCloseModal} onSubmit={handleSubmit} item={currentItem}/>}
 
-          <table className='min-w-full'>
-            <thead className='bg-white border-b'>
-              <tr>
-                <ThComponent label='Nom'/>
-                <ThComponent label='Catégorie'/>
-                <ThComponent label="Groupe"/>
-                <ThComponent label='Date de création'/>
-                <ThComponent label='Date de mise à jour'/>
-              </tr>
-            </thead>
-            <tbody>
-              <TbodyComponent items={items} onDeleteItem={onDeleteItem} />
-            </tbody>
-          </table>
-        </>
-      }
-    </>
+      <table className='min-w-full'>
+        <thead className='bg-white border-b'>
+          <tr>
+            <ThComponent label='Nom'/>
+            <ThComponent label='Catégorie'/>
+            <ThComponent label="Groupe"/>
+            <ThComponent label='Date de création'/>
+            <ThComponent label='Date de mise à jour'/>
+            <ThComponent label='Outils'/>
+          </tr>
+        </thead>
+        <tbody>
+          <TbodyComponent items={items} onDeleteItem={onDeleteItem} onUpdateModal={onUpdateModal}/>
+        </tbody>
+      </table>
+    </div>
   );
 };
 

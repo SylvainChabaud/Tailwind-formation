@@ -12,6 +12,7 @@ module.exports = {
     type Mutation {
       createItem(itemToCreate: ItemToCreate): ItemResponse
       deleteItem(itemIdToDelete: ID!): ItemResponse
+      updateItem(itemIdToUpdate: ID!, itemToUpdate: ItemToCreate): ItemResponse
     }
   `,
   resolvers: {
@@ -23,7 +24,8 @@ module.exports = {
     },
     Mutation: {
       createItem: (parent, { itemToCreate }, context) => ItemsResolver(context).createItem(itemToCreate),
-      deleteItem: (parent, { itemIdToDelete }, context) => ItemsResolver(context).deleteItem(itemIdToDelete)
+      deleteItem: (parent, { itemIdToDelete }, context) => ItemsResolver(context).deleteItem(itemIdToDelete),
+      updateItem: (parent, { itemIdToUpdate, itemToUpdate }, context) => ItemsResolver(context).updateItem(itemIdToUpdate, itemToUpdate)
     }
   }
 };

@@ -36,9 +36,21 @@ const ItemsResolver = () => (() => {
 
   const deleteItem = async itemId => {
     try {
-      const isDeletedItem = await ItemCtrl().deleteItem(itemId);
-      if (isDeletedItem.deletedCount) return OK({ isDeletedItem });
+      const response = await ItemCtrl().deleteItem(itemId);
+      if (response.deletedCount) return OK();
       else return KO('Aucun élément supprimé');
+    } catch (err) {
+      console.info('ERROR', err);
+      return KO('Une erreur est survenue');
+    }
+  };
+
+  const updateItem = async (itemIdToUpdate, itemToUpdate) => {
+    try {
+      const response = await ItemCtrl().updateItem(itemIdToUpdate, itemToUpdate);
+      console.info('BEFORE', response);
+      if (response.nModified) return OK();
+      else return KO('Aucun élément mise à jour');
     } catch (err) {
       console.info('ERROR', err);
       return KO('Une erreur est survenue');
@@ -49,7 +61,8 @@ const ItemsResolver = () => (() => {
     createItem,
     getItemById,
     getItems,
-    deleteItem
+    deleteItem,
+    updateItem
   };
 })();
 
