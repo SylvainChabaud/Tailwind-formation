@@ -29,7 +29,7 @@ const mockItemsToFind = [
   }
 ];
 const mockItemToUpdate = {
-  name: 'johnUpdated',
+  name: 'john Updated',
   category: 'A',
   group: 'Admin'
 };
@@ -91,11 +91,11 @@ describe.only('itemResolver', function () {
 
   describe('#createItem()', function () {
     it('should return ITEM created', async () => {
-      const item = await ItemsResolver().createItem(mockItemsToCreate);
-      expect(item.ok).to.equal(true);
-      expect(item.response.name).to.equal('Joe Dassin');
-      expect(item.response.group).to.equal('Admin');
-      expect(item.response.category).to.equal('B');
+      const response = await ItemsResolver().createItem(mockItemsToCreate);
+      expect(response.ok).to.equal(true);
+      expect(response.item.name).to.equal('Joe Dassin');
+      expect(response.item.group).to.equal('Admin');
+      expect(response.item.category).to.equal('B');
     });
 
     it('should return FALSE when no item parameter is given', async () => {

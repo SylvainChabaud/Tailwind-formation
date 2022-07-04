@@ -3,12 +3,12 @@ const { OK, KO } = require('./helpers');
 
 const Ajv = require('ajv');
 const ajv = new Ajv({ useDefaults: true });
-
+const categoryValidValues = ['A', 'B', 'C', 'D'];
 const SchemaValidator = {
   type: 'object',
   properties: {
     name: { type: 'string', pattern: '[a-zA-Z]' },
-    category: { type: 'string', enum: ['A', 'B', 'C', 'D'] }
+    category: { type: 'string', enum: categoryValidValues }
   }
 };
 
@@ -17,9 +17,9 @@ const ItemsResolver = () => (() => {
     const isValidatedCategory = ajv.validate(SchemaValidator, itemToCreate);
     if (!isValidatedCategory) return KO('Les données ne respectent pas les règles de validation');
     try {
-      const response = await ItemCtrl().createItem(itemToCreate);
-      if (response.error) return KO(response.error);
-      else return OK({ response });
+      const item = await ItemCtrl().createItem(itemToCreate);
+      if (item.error) return KO(item.error);
+      else return OK({ item });
     } catch (err) {
       console.info('ERROR', err);
       return KO('Une erreur est survenue');
