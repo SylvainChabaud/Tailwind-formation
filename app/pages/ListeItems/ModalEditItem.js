@@ -21,7 +21,7 @@ const SvgcloseIcon = ({ onClick }) => {
   );
 };
 
-const optionsTab = ['A', 'B', 'C'];
+const optionsTab = ['A', 'B', 'C', 'D'];
 
 const defaultValue = {
   name: '',

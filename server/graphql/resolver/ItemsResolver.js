@@ -1,12 +1,38 @@
 const { ItemCtrl } = require('../../controllers/itemCtrl');
 const { OK, KO } = require('./helpers');
 
+const Ajv = require('ajv');
+const ajv = new Ajv({ useDefaults: true });
+
+const SchemaValidator = {
+  type: 'object',
+  properties: {
+    name: { type: 'string', pattern: '[a-zA-Z]' },
+    category: { type: 'string', enum: ['A', 'B', 'C', 'D'] }
+  }
+};
+
 const ItemsResolver = () => (() => {
   const createItem = async itemToCreate => {
-    if (!itemToCreate) return KO('Aucun item renseigné');
+    const isValidatedCategory = ajv.validate(SchemaValidator, itemToCreate);
+    if (!isValidatedCategory) return KO('Les données ne respectent pas les règles de validation');
     try {
-      const item = await ItemCtrl().createItem(itemToCreate);
-      return OK({ item });
+      const response = await ItemCtrl().createItem(itemToCreate);
+      if (response.error) return KO(response.error);
+      else return OK({ response });
+    } catch (err) {
+      console.info('ERROR', err);
+      return KO('Une erreur est survenue');
+    }
+  };
+
+  const updateItem = async (itemIdToUpdate, itemToUpdate) => {
+    const isValidatedCategory = ajv.validate(SchemaValidator, itemToUpdate);
+    if (!isValidatedCategory) return KO('Les données ne respectent pas les règles de validation');
+    try {
+      const response = await ItemCtrl().updateItem(itemIdToUpdate, itemToUpdate);
+      if (response.nModified) return OK();
+      else return KO('Aucun élément mise à jour');
     } catch (err) {
       console.info('ERROR', err);
       return KO('Une erreur est survenue');
@@ -39,18 +65,6 @@ const ItemsResolver = () => (() => {
       const response = await ItemCtrl().deleteItem(itemId);
       if (response.deletedCount) return OK();
       else return KO('Aucun élément supprimé');
-    } catch (err) {
-      console.info('ERROR', err);
-      return KO('Une erreur est survenue');
-    }
-  };
-
-  const updateItem = async (itemIdToUpdate, itemToUpdate) => {
-    try {
-      const response = await ItemCtrl().updateItem(itemIdToUpdate, itemToUpdate);
-      console.info('BEFORE', response);
-      if (response.nModified) return OK();
-      else return KO('Aucun élément mise à jour');
     } catch (err) {
       console.info('ERROR', err);
       return KO('Une erreur est survenue');

@@ -1,6 +1,10 @@
 const ItemModel = require('../../services/items/items');
 
 const itemCtrl = () => {
+  const updateItem = (itemIdToUpdate, itemToUpdate) => {
+    return ItemModel.updateItem(itemIdToUpdate, itemToUpdate);
+  };
+
   const createItem = itemToCreate => {
     return ItemModel.createItem(itemToCreate);
   };
@@ -15,10 +19,6 @@ const itemCtrl = () => {
 
   const deleteItem = itemIdToDelete => {
     return ItemModel.deleteItem(itemIdToDelete);
-  };
-
-  const updateItem = (itemIdToUpdate, itemToUpdate) => {
-    return ItemModel.updateItem(itemIdToUpdate, itemToUpdate);
   };
 
   return {

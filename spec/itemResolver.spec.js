@@ -6,7 +6,7 @@ var { dbMongo } = require('../server/lib/options/dbMongo');
 
 const currentDate = new Date();
 const mockItemsToCreate = {
-  name: 'Marty',
+  name: 'Joe Dassin',
   category: 'B',
   group: 'Admin'
 };
@@ -29,9 +29,19 @@ const mockItemsToFind = [
   }
 ];
 const mockItemToUpdate = {
-  name: 'JohnUpdated',
+  name: 'johnUpdated',
   category: 'A',
   group: 'Admin'
+};
+const mockCategoryInvalidSchema = {
+  name: 'James',
+  category: 'Z',
+  group: ''
+};
+const mockNameInvalidSchema = {
+  name: '^',
+  category: 'A',
+  group: ''
 };
 
 describe.only('itemResolver', function () {
@@ -81,17 +91,29 @@ describe.only('itemResolver', function () {
 
   describe('#createItem()', function () {
     it('should return ITEM created', async () => {
-      const response = await ItemsResolver().createItem(mockItemsToCreate);
-      expect(response.ok).to.equal(true);
-      expect(response.item.name).to.equal('Marty');
-      expect(response.item.group).to.equal('Admin');
-      expect(response.item.category).to.equal('B');
+      const item = await ItemsResolver().createItem(mockItemsToCreate);
+      expect(item.ok).to.equal(true);
+      expect(item.response.name).to.equal('Joe Dassin');
+      expect(item.response.group).to.equal('Admin');
+      expect(item.response.category).to.equal('B');
     });
 
     it('should return FALSE when no item parameter is given', async () => {
-      const response = await ItemsResolver().createItem();
-      expect(response.ok).to.equal(false);
-      expect(response.error).to.equal('Aucun item renseigné');
+      const item = await ItemsResolver().createItem();
+      expect(item.ok).to.equal(false);
+      expect(item.error).to.equal('Les données ne respectent pas les règles de validation');
+    });
+
+    it('should return ERROR when CATEGORY AJV schema validator is INVALID', async () => {
+      const item = await ItemsResolver().createItem(mockCategoryInvalidSchema);
+      expect(item.ok).to.equal(false);
+      expect(item.error).to.equal('Les données ne respectent pas les règles de validation');
+    });
+
+    it('should return ERROR when NAME AJV schema validator is INVALID', async () => {
+      const item = await ItemsResolver().createItem(mockNameInvalidSchema);
+      expect(item.ok).to.equal(false);
+      expect(item.error).to.equal('Les données ne respectent pas les règles de validation');
     });
   });
 
@@ -118,7 +140,6 @@ describe.only('itemResolver', function () {
   describe('#deleteItem()', function () {
     it('should return OK when item is deleted', async () => {
       const response = await ItemsResolver().deleteItem('62b1d766d17eae3c700030de');
-      console.info('RETRUN', response);
       expect(response.ok).to.equal(true);
     });
 
@@ -151,6 +172,18 @@ describe.only('itemResolver', function () {
       const response = await ItemsResolver().updateItem(undefined, mockItemToUpdate);
       expect(response.ok).to.equal(false);
       expect(response.error).to.equal('Aucun élément mise à jour');
+    });
+
+    it('should return ERROR when Category AJV schema validator is INVALID', async () => {
+      const response = await ItemsResolver().updateItem('62b1d766d17eae3c700030de', mockCategoryInvalidSchema);
+      expect(response.ok).to.equal(false);
+      expect(response.error).to.equal('Les données ne respectent pas les règles de validation');
+    });
+
+    it('should return ERROR when NAME AJV schema validator is INVALID', async () => {
+      const item = await ItemsResolver().updateItem('62b1d766d17eae3c700030de', mockNameInvalidSchema);
+      expect(item.ok).to.equal(false);
+      expect(item.error).to.equal('Les données ne respectent pas les règles de validation');
     });
   });
 });
