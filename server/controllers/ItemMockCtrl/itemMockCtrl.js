@@ -17,10 +17,6 @@ const ItemMockCtrl = (() => {
     )(item);
   };
 
-  const getItemById = id => {
-    return R.find(R.propEq('_id', id), itemsList);
-  };
-
   const updateItem = (id, itemToUpdate) => {
     R.ifElse(R.isNil,
       R.always(undefined),
@@ -39,6 +35,10 @@ const ItemMockCtrl = (() => {
     )(itemToUpdate);
 
     return R.find(R.propEq('_id', id))(itemsList);
+  };
+
+  const getItemById = id => {
+    return R.find(R.propEq('_id', id), itemsList);
   };
 
   const deleteItem = id => {

@@ -8,20 +8,20 @@ import useItems from './useItems';
 const ListeItems = () => {
   const [currentItem, setCurrentItem] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
-  const [isError, setIsError] = useState(null);
+  const [error, setError] = useState(null);
   const { items, refetch: refetchItems } = useItemQueries();
 
   const onResultChangeItem = (ok, error) => {
-    if (!ok) return setIsError(error);
+    if (!ok) return setError(error);
 
     refetchItems();
     setOpenModal(false);
     setCurrentItem(null);
+    setError(null);
   };
 
   const { onCreateItem, onDeleteItem, onUpdateItem } = useItems(onResultChangeItem);
 
-  // ON MODAL FOR UPDATE
   const onUpdateModal = item => {
     setCurrentItem(item);
     setOpenModal(true);
@@ -39,7 +39,7 @@ const ListeItems = () => {
 
   return (
     <div>
-      {isError && <p>{isError}</p>}
+      {error && <p className='text-red-600 border p-5 mt-5'>{error}</p>}
       <button
         name='itemCreationModal'
         onClick={ () => setOpenModal(true) }

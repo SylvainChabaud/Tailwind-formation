@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { mergeLeft, compose, not, isNil, prop } from 'ramda';
 
+const categoryValidValues = require('../../../server/graphql/resolver/constants');
+
 const SvgcloseIcon = ({ onClick }) => {
   return (
     <svg
@@ -20,8 +22,6 @@ const SvgcloseIcon = ({ onClick }) => {
     </svg>
   );
 };
-
-const optionsTab = ['A', 'B', 'C'];
 
 const defaultValue = {
   name: '',
@@ -82,7 +82,7 @@ const ModalEditItem = ({ onSubmit, item, onClose }) => {
                   autoComplete="on"
                   className="p-4 mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-100"
                 >
-                  {optionsTab.map(option => <option key={'key-' + option}>{option}</option>)}
+                  {categoryValidValues.map(option => <option key={'key-' + option}>{option}</option>)}
                 </select>
               </div>
 
