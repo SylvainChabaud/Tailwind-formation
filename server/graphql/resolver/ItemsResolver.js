@@ -1,9 +1,10 @@
 const { ItemCtrl } = require('../../controllers/itemCtrl');
 const { OK, KO } = require('./helpers');
+const categoryValidValues = require('./constants');
 
 const Ajv = require('ajv');
 const ajv = new Ajv({ useDefaults: true });
-const categoryValidValues = ['A', 'B', 'C', 'D'];
+
 const SchemaValidator = {
   type: 'object',
   properties: {
