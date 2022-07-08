@@ -100,15 +100,6 @@ const ModalEditItem = ({ onSubmit, onClose, item, groups }) => {
                 >
                   {groups.map(option => <option key={'key-' + option}>{option}</option>)}
                 </select>
-                {/* <input
-                  value={inputs.group}
-                  onChange={onFormChange}
-                  type="text"
-                  name="group"
-                  id="group"
-                  autoComplete="on"
-                  className="p-4 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-slate-100"
-                /> */}
               </div>
             </div>
             <div className="flex justify-center pt-5">
