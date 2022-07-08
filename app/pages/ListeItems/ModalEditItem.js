@@ -26,10 +26,10 @@ const SvgcloseIcon = ({ onClick }) => {
 const defaultValue = {
   name: '',
   category: 'A',
-  group: ''
+  group: 'group1'
 };
 
-const ModalEditItem = ({ onSubmit, item, onClose }) => {
+const ModalEditItem = ({ onSubmit, onClose, item, groups }) => {
   const [inputs, setInputs] = useState(mergeLeft(item, defaultValue));
 
   const onFormChange = e => {
@@ -90,7 +90,17 @@ const ModalEditItem = ({ onSubmit, item, onClose }) => {
                 <label htmlFor="group" className="block text-sm font-medium text-gray-700">
                   Groupe
                 </label>
-                <input
+                <select
+                  value={inputs.group}
+                  onChange={onFormChange}
+                  id="group"
+                  name="group"
+                  autoComplete="on"
+                  className="p-4 mt-1 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-100"
+                >
+                  {groups.map(option => <option key={'key-' + option}>{option}</option>)}
+                </select>
+                {/* <input
                   value={inputs.group}
                   onChange={onFormChange}
                   type="text"
@@ -98,7 +108,7 @@ const ModalEditItem = ({ onSubmit, item, onClose }) => {
                   id="group"
                   autoComplete="on"
                   className="p-4 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-slate-100"
-                />
+                /> */}
               </div>
             </div>
             <div className="flex justify-center pt-5">

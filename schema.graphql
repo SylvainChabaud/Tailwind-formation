@@ -127,6 +127,12 @@ enum GenderEnum {
   M
 }
 
+type GroupsResponse {
+  error: String
+  groups: [String]
+  ok: Boolean
+}
+
 type Item {
   _id: ID!
   category: String
@@ -189,6 +195,7 @@ type Payments {
 type Query {
   contract(subscriberId: ID!): Contract
   getBeneficiaries(subscriberId: ID!): Beneficiaries
+  getGroups: GroupsResponse
   getItemById(itemId: ID!): ItemResponse
   getItems: ItemsResponse
 }

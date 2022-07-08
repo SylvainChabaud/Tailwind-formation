@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ThComponent, TbodyComponent } from './tableComponents';
 import ModalEditItem from './ModalEditItem';
-import { useItemQueries } from '../../hooks';
+import { useItemQueries, useGroupsQueries } from '../../hooks';
 import { compose, not, isNil, prop } from 'ramda';
 import useItems from './useItems';
 
@@ -10,6 +10,7 @@ const ListeItems = () => {
   const [isOpenModal, setOpenModal] = useState(false);
   const [error, setError] = useState(null);
   const { items, refetch: refetchItems } = useItemQueries();
+  const { groups } = useGroupsQueries();
 
   const onResultChangeItem = (ok, error) => {
     if (!ok) return setError(error);
@@ -50,7 +51,7 @@ const ListeItems = () => {
         AJOUTER UN ITEM
       </button>
 
-      {isOpenModal && <ModalEditItem onClose={handleCloseModal} onSubmit={handleSubmit} item={currentItem}/>}
+      {isOpenModal && <ModalEditItem onClose={handleCloseModal} onSubmit={handleSubmit} item={currentItem} groups={groups} />}
 
       <table className='min-w-full'>
         <thead className='bg-white border-b'>

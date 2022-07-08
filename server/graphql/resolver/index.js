@@ -1,9 +1,11 @@
 const ContractResolver = require('./ContractResolver');
 const ItemsResolver = require('./ItemsResolver');
+const GroupsResolver = require('./groupsResolver');
 
 const Resolver = {
   ContractResolver,
-  ItemsResolver
+  ItemsResolver,
+  GroupsResolver
 };
 
 module.exports = Resolver;

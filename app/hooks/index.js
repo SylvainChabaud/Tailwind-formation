@@ -7,6 +7,7 @@ import useQueryContext from './useQueryContext';
 import useModal from './useModal';
 import useItemMutations from './useItemMutations';
 import useItemQueries from './useItemQueries';
+import useGroupsQueries from './useGroupQueries';
 
 export {
   useFetching,
@@ -17,5 +18,6 @@ export {
   useQueryContext,
   useModal,
   useItemMutations,
-  useItemQueries
+  useItemQueries,
+  useGroupsQueries
 };

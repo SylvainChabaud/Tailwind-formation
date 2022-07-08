@@ -1,9 +1,10 @@
 const service = require('@fasstech/service');
 
-const itemsGroupsService = (command, args) => {
+const groupsService = (command, args) => {
   return service(
     'itemsGroups',
-    `${process.env.ROOT_API_GROUPS}`,
+    // `${process.env.ROOT_API_GROUPS}`,
+    'http://localhost:4010/api',
     {
       '/groups': {
         route: '/groups',
@@ -13,4 +14,4 @@ const itemsGroupsService = (command, args) => {
   )(command, args);
 };
 
-module.exports = itemsGroupsService;
+module.exports = groupsService;
