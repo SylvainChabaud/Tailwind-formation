@@ -10,7 +10,6 @@ const { dbMongo } = require('../lib/options/dbMongo');
 const emailRouterService = require('../services/emailRouter');
 const path = require('path');
 const checkEnvVars = require('../lib/options/checkEnvVars');
-const groupsService = require('../services/groups');
 
 const initDb = async () => {
   await dbMongo.init(process.env.MONGO_DB_URL);
@@ -23,8 +22,6 @@ const initServices = async () => {
   const ENV = R.propOr('DEV', 'ENV', process.env);
   const filepath = path.join(process.env.ROOT_DIR, 'params', `emails_${ENV}.yml`);
   await emailRouterService('init', { filepath });
-
-  console.log('SERVICE API GROUPS', await groupsService('/groups'));
 };
 
 const onListening = (server) => () => {
