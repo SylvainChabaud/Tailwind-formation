@@ -6,5 +6,6 @@ required:
   JWT_SECRET: json web token
   PUBLIC_URL: url publique du service
   SECURED_GRAPHQL: active la sécurité sur la partie graphql
+  ROOT_API_GROUPS: url racine de API_GROUPS
 optional:
   PLAYGROUND_ALLOWED: activation du playground graphql (uniquement en NODE_ENV development et false par défaut)
